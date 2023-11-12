@@ -1,0 +1,35 @@
+/* 
+  Localizable.strings
+  
+
+  Created by Carl Funk on 12/10/22.
+  
+*/
+
+// MARK: - LocationCard
+
+"Remove Favorite"   = "Remove Favorite";
+"Set as Home"       = "Set as Home";
+
+// MARK: - LocationSearchEmptyResult
+
+"Hmm, no result yet"    = "Hmm, no result yet";
+"Keep searching"        = "Keep searching";
+
+// MARK: - LocationWeatherScreen
+
+"Favorite"          = "Favorite";
+"Today"             = "Today";
+"Set as Home"       = "Set as Home";
+
+// MARK: - SettingsPreviewView
+
+"Your Location Now" = "Your Location Now";
+"Location is currently not in use. Weather is not being shown for your location." = "Location is currently not in use. Weather is not being shown for your location.";
+"Enable my location" = "Enable my location";
+
+// MARK: - WeatherSettingsTile
+
+"Pressure"      = "Pressure";
+"Temperature"   = "Temperature";
+"Wind Speed"    = "Wind Speed";
