@@ -6,7 +6,6 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import SettingsDomain
 import SwiftUI
 import UI
 import UseCases
@@ -15,7 +14,6 @@ import WeatherDomain
 public struct LocationWeatherScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
-    @State private var settings: Settings = .mock()
     @State private var weather: Weather = .mock()
     
     private let location: String
@@ -39,7 +37,6 @@ public struct LocationWeatherScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .redacted(when: weather == Weather.mock())
         .task(id: location, loadData)
-        .task(id: location, loadSettingsData)
     }
     
     private var narrowContent: some View {
@@ -170,14 +167,6 @@ public struct LocationWeatherScreen: View {
             self.weather = weatherModel
         } catch {
             print(error)
-        }
-    }
-    
-    @Sendable
-    private func loadSettingsData() async {
-        let settingsStream = GetSettingsSubscriptionUseCase.run()
-        for await settings in settingsStream {
-            self.settings = settings
         }
     }
 }

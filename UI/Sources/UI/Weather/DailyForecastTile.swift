@@ -47,6 +47,7 @@ public struct DailyForecastTile: View, ActionableView {
         .frame(maxWidth: .infinity)
         .padding(.horizontal, BrandTheme.Spacing.standard)
         .task(id: location, loadData)
+        .task(loadSettingsData)
     }
     
     @ViewBuilder
@@ -79,6 +80,14 @@ public struct DailyForecastTile: View, ActionableView {
             self.dayForecasts = dayForecastModels
         } catch {
             print(error)
+        }
+    }
+    
+    @Sendable
+    private func loadSettingsData() async {
+        let settingsStream = GetSettingsSubscriptionUseCase.run()
+        for await settings in settingsStream {
+            self.settings = settings
         }
     }
 }

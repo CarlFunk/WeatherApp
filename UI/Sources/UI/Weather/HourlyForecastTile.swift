@@ -40,6 +40,7 @@ public struct HourlyForecastTile: View {
         }
         .frame(height: scrollViewHeight)
         .task(id: location, loadData)
+        .task(loadSettingsData)
     }
     
     @ViewBuilder
@@ -81,6 +82,14 @@ public struct HourlyForecastTile: View {
             self.hourForecasts = hourForecastModels
         } catch {
             print(error)
+        }
+    }
+    
+    @Sendable
+    private func loadSettingsData() async {
+        let settingsStream = GetSettingsSubscriptionUseCase.run()
+        for await settings in settingsStream {
+            self.settings = settings
         }
     }
 }
