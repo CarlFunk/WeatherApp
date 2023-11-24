@@ -10,7 +10,11 @@ import Foundation
 import WeatherData
 
 extension SearchLocation {
-    init(from response: SearchLocationInnerResponseModel) {
+    init(
+        from response: SearchLocationInnerResponseModel,
+        isFavorite: Bool = false,
+        isPrimary: Bool = false
+    ) {
         self.id = response.id
         self.location = WeatherLocation(
             id: String(response.id),
@@ -20,8 +24,8 @@ extension SearchLocation {
             coordinate: GeographicCoordinate(
                 latitude: response.latitude,
                 longitude: response.longitude),
-            isFavorite: false,
-            isPrimary: false)
+            isFavorite: isFavorite,
+            isPrimary: isPrimary)
         self.locationQuery = response.query
     }
 }

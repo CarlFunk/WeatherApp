@@ -24,7 +24,6 @@ public struct FavoriteScreen: View, NavigatableView {
     @State private var searchText: String = ""
     @State private var favoriteLocations: [String] = []
     @State private var searchResults: [SearchLocation] = []
-    @State private var favoriteLocationsCancellable: AnyCancellable?
     
     public let navigationRequest: NavigationRequestClosure
     
@@ -55,13 +54,7 @@ public struct FavoriteScreen: View, NavigatableView {
             }
         }
         .task(id: searchText, loadSearchResults)
-        .onAppear {
-            favoriteLocationsCancellable =  GetFavoriteLocationsSubscriptionUseCase.run()
-                .receive(on: RunLoop.main)
-                .sink { favoriteLocations in
-                    self.favoriteLocations = favoriteLocations
-                }
-        }
+        .task(streamFavoriteLocations)
     }
     
     private var searchBar: some View {
@@ -128,6 +121,18 @@ public struct FavoriteScreen: View, NavigatableView {
         do {
             let locations = try await SearchForLocationsUseCase.run(search: searchText)
             searchResults = locations
+        } catch {
+            
+        }
+    }
+    
+    @Sendable
+    private func streamFavoriteLocations() async {
+        do {
+            let favoriteLocationsStream = GetFavoriteLocationsSubscriptionUseCase.run()
+            for await favoriteLocations in favoriteLocationsStream {
+                self.favoriteLocations = favoriteLocations
+            }
         } catch {
             
         }

@@ -42,7 +42,7 @@ public final class MockWeatherRepository: WeatherRepository {
     
     public func getLocations(
         for search: String
-    ) async throws -> [SearchLocation] {
+    ) async throws -> SearchLocationResults {
         return [
             SearchLocation.mock()
         ]

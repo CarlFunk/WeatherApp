@@ -30,5 +30,5 @@ public protocol WeatherRepository {
     
     func getLocations(
         for search: String
-    ) async throws -> [SearchLocation]
+    ) async throws -> SearchLocationResults
 }

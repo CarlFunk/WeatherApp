@@ -7,39 +7,22 @@
 //
 
 import Combine
-import Foundation
 import WeatherDomain
 
 public final class MockSettingsRepository: SettingsRepository {
-    private let pressureUnitPublisher: CurrentValueSubject<PressureUnit, Never>
-    private let temperatureUnitPublisher: CurrentValueSubject<TemperatureUnit, Never>
-    private let windSpeedUnitPublisher: CurrentValueSubject<WindSpeedUnit, Never>
+    private let settingsPublisher: CurrentValueSubject<Settings, Never>
     private let homeLocationPublisher: CurrentValueSubject<String, Never>
     
     public init(
-        pressureUnit: PressureUnit = .inch,
-        temperatureUnit: TemperatureUnit = .fahrenheit,
-        windSpeedUnit: WindSpeedUnit = .milesPerHour,
+        settings: Settings = .mock(),
         homeLocation: String = WeatherLocation.standardQuery()
     ) {
-        self.pressureUnitPublisher = .init(pressureUnit)
-        self.temperatureUnitPublisher = .init(temperatureUnit)
-        self.windSpeedUnitPublisher = .init(windSpeedUnit)
+        self.settingsPublisher = .init(settings)
         self.homeLocationPublisher = .init(homeLocation)
     }
     
-    public func getCurrentPressureUnitSubscription() -> AnyPublisher<PressureUnit, Never> {
-        pressureUnitPublisher
-            .eraseToAnyPublisher()
-    }
-    
-    public func getCurrentTemperatureUnitSubscription() -> AnyPublisher<TemperatureUnit, Never> {
-        temperatureUnitPublisher
-            .eraseToAnyPublisher()
-    }
-    
-    public func getCurrentWindSpeedUnitSubscription() -> AnyPublisher<WindSpeedUnit, Never> {
-        windSpeedUnitPublisher
+    public func getSettingsSubscription() -> AnyPublisher<Settings, Never> {
+        settingsPublisher
             .eraseToAnyPublisher()
     }
     
@@ -48,32 +31,16 @@ public final class MockSettingsRepository: SettingsRepository {
             .eraseToAnyPublisher()
     }
     
-    public func getCurrentPressureUnit() async throws -> PressureUnit {
-        pressureUnitPublisher.value
-    }
-    
-    public func getCurrentTemperatureUnit() async throws -> TemperatureUnit {
-        temperatureUnitPublisher.value
-    }
-    
-    public func getCurrentWindSpeedUnit() async throws -> WindSpeedUnit {
-        windSpeedUnitPublisher.value
+    public func getSettings() async throws -> Settings {
+        settingsPublisher.value
     }
     
     public func getHomeLocation() async throws -> String {
         homeLocationPublisher.value
     }
     
-    public func setCurrentPressureUnit(_ pressureUnit: PressureUnit) async throws {
-        pressureUnitPublisher.send(pressureUnit)
-    }
-    
-    public func setCurrentTemperatureUnit(_ temperatureUnit: TemperatureUnit) async throws {
-        temperatureUnitPublisher.send(temperatureUnit)
-    }
-    
-    public func setCurrentWindSpeedUnit(_ windSpeedUnit: WindSpeedUnit) async throws {
-        windSpeedUnitPublisher.send(windSpeedUnit)
+    public func setSettings(_ settings: Settings) async throws {
+        settingsPublisher.send(settings)
     }
     
     public func setHomeLocation(_ location: String) async throws {

@@ -6,10 +6,8 @@
 //  Copyright © 2023 Carl Funk. All rights reserved.
 //
 
-import Foundation
-
 public protocol FavoriteLocalDataSource {
     func addLocation(_ location: String) async throws
-    func fetchLocations() async throws -> [String]
+    func fetchLocations() async throws -> FavoriteLocationsResponse
     func removeLocation(_ location: String) async throws
 }

@@ -35,7 +35,7 @@ public final class DefaultFavoriteLocalDataSource: FavoriteLocalDataSource {
         }
     }
     
-    public func fetchLocations() async throws -> [String] {
+    public func fetchLocations() async throws -> FavoriteLocationsResponse {
         store.array(forKey: StorageKeys.favoriteLocations.rawValue) as? [String] ?? [String]()
     }
     

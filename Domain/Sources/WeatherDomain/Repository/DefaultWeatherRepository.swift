@@ -7,11 +7,15 @@
 //
 
 import Dependency
+import FavoriteData
 import Foundation
+import SettingsData
 import WeatherData
 
 public final class DefaultWeatherRepository: WeatherRepository {
+    @Dependency(FavoriteLocalDataSource.self) private var favoriteLocalDataSource
     @Dependency(RemoteWeatherDataSource.self) private var remoteDataSource
+    @Dependency(SettingsLocalDataSource.self) private var settingsLocalDataSource
     
     public init() { }
     
@@ -19,8 +23,14 @@ public final class DefaultWeatherRepository: WeatherRepository {
         for location: String,
         airQualityIncluded: Bool
     ) async throws -> Weather {
-        let responseModel = try await remoteDataSource.fetchCurrent(for: location, airQualityIncluded: airQualityIncluded)
-        return Weather(from: responseModel)
+        let weatherResponse = try await remoteDataSource.fetchCurrent(for: location, airQualityIncluded: airQualityIncluded)
+        let favoriteLocationsResponse = try await favoriteLocalDataSource.fetchLocations()
+        let homeLocationResponse = try await settingsLocalDataSource.fetchHomeLocation()
+        
+        return Weather(
+            weatherResponse: weatherResponse,
+            favoriteLocationsResponse: favoriteLocationsResponse,
+            homeLocationResponse: homeLocationResponse)
     }
     
     public func getDayForecast(
@@ -51,12 +61,14 @@ public final class DefaultWeatherRepository: WeatherRepository {
     
     public func getLocations(
         for search: String
-    ) async throws -> [SearchLocation] {
-        let responseModels = try await remoteDataSource.fetchSearchResults(for: search)
+    ) async throws -> SearchLocationResults {
+        let searchWeatherResponse = try await remoteDataSource.fetchSearchResults(for: search)
+        let favoriteLocationsResponse = try await favoriteLocalDataSource.fetchLocations()
+        let homeLocationResponse = try await settingsLocalDataSource.fetchHomeLocation()
         
-        return responseModels
-            .map { locationResponseModel in
-                SearchLocation(from: locationResponseModel)
-            }
+        return SearchLocationResults(
+            searchWeatherResponse: searchWeatherResponse,
+            favoriteLocationsResponse: favoriteLocationsResponse,
+            homeLocationResponse: homeLocationResponse)
     }
 }

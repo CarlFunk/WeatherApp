@@ -13,94 +13,36 @@ import SettingsData
 import WeatherDomain
 
 public final class DefaultSettingsRepository: SettingsRepository {
-    private static let pressureUnitPublisher = CurrentValueSubject<PressureUnit?, Never>(nil)
-    private static let temperatureUnitPublisher = CurrentValueSubject<TemperatureUnit?, Never>(nil)
-    private static let windSpeedUnitPublisher = CurrentValueSubject<WindSpeedUnit?, Never>(nil)
+    private static let settingsPublisher = CurrentValueSubject<Settings?, Never>(nil)
     private static let homeLocationPublisher = CurrentValueSubject<String?, Never>(nil)
     
     @Dependency(SettingsLocalDataSource.self) private var localDataSource
     
     public init() { }
     
-    public func getCurrentPressureUnitSubscription() -> AnyPublisher<PressureUnit, Never> {
-        if DefaultSettingsRepository.pressureUnitPublisher.value == nil {
-            return Future<PressureUnit, Never> { promise in
+    public func getSettingsSubscription() -> AnyPublisher<Settings, Never> {
+        if DefaultSettingsRepository.settingsPublisher.value == nil {
+            return Future<Settings, Never> { promise in
                 Task {
-                    let unit: PressureUnit
+                    let settings: Settings
                     do {
-                        unit = try await self.getCurrentPressureUnit()
+                        settings = try await self.getSettings()
                     } catch {
-                        unit = PressureUnit.millibar
+                        settings = .default()
                     }
                     
-                    DefaultSettingsRepository.pressureUnitPublisher.value = unit
-                    promise(.success(unit))
+                    DefaultSettingsRepository.settingsPublisher.value = settings
+                    promise(.success(settings))
                 }
             }
             .flatMap { unit in
-                return DefaultSettingsRepository.pressureUnitPublisher
+                return DefaultSettingsRepository.settingsPublisher
                     .compactMap { $0 }
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
         } else {
-            return DefaultSettingsRepository.pressureUnitPublisher
-                .compactMap { $0 }
-                .eraseToAnyPublisher()
-        }
-    }
-    
-    public func getCurrentTemperatureUnitSubscription() -> AnyPublisher<TemperatureUnit, Never> {
-        if DefaultSettingsRepository.temperatureUnitPublisher.value == nil {
-            return Future<TemperatureUnit, Never> { promise in
-                Task {
-                    let unit: TemperatureUnit
-                    do {
-                        unit = try await self.getCurrentTemperatureUnit()
-                    } catch {
-                        unit = TemperatureUnit.fahrenheit
-                    }
-                    
-                    DefaultSettingsRepository.temperatureUnitPublisher.value = unit
-                    promise(.success(unit))
-                }
-            }
-            .flatMap { unit in
-                return DefaultSettingsRepository.temperatureUnitPublisher
-                    .compactMap { $0 }
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-        } else {
-            return DefaultSettingsRepository.temperatureUnitPublisher
-                .compactMap { $0 }
-                .eraseToAnyPublisher()
-        }
-    }
-    
-    public func getCurrentWindSpeedUnitSubscription() -> AnyPublisher<WindSpeedUnit, Never> {
-        if DefaultSettingsRepository.windSpeedUnitPublisher.value == nil {
-            return Future<WindSpeedUnit, Never> { promise in
-                Task {
-                    let unit: WindSpeedUnit
-                    do {
-                        unit = try await self.getCurrentWindSpeedUnit()
-                    } catch {
-                        unit = WindSpeedUnit.kilometersPerHour
-                    }
-                    
-                    DefaultSettingsRepository.windSpeedUnitPublisher.value = unit
-                    promise(.success(unit))
-                }
-            }
-            .flatMap { unit in
-                return DefaultSettingsRepository.windSpeedUnitPublisher
-                    .compactMap { $0 }
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-        } else {
-            return DefaultSettingsRepository.windSpeedUnitPublisher
+            return DefaultSettingsRepository.settingsPublisher
                 .compactMap { $0 }
                 .eraseToAnyPublisher()
         }
@@ -134,46 +76,12 @@ public final class DefaultSettingsRepository: SettingsRepository {
         }
     }
     
-    public func getCurrentPressureUnit() async throws -> PressureUnit {
-        let defaultUnit: PressureUnit = .millibar
-        
+    public func getSettings() async throws -> Settings {
         do {
-            let abbreviation = try await localDataSource.fetchCurrentPressureUnit()
-            guard let unit = PressureUnit(abbreviation: abbreviation) else {
-                return defaultUnit
-            }
-            return unit
+            let response = try await localDataSource.fetchWeatherSettings()
+            return Settings(from: response)
         } catch {
-            return defaultUnit
-        }
-    }
-    
-    public func getCurrentTemperatureUnit() async throws -> TemperatureUnit {
-        let defaultUnit: TemperatureUnit = .fahrenheit
-        
-        do {
-            let abbreviation = try await localDataSource.fetchCurrentTemperatureUnit()
-            guard let unit = TemperatureUnit(abbreviation: abbreviation) else {
-                return defaultUnit
-            }
-            return unit
-        } catch {
-            return defaultUnit
-        }
-    }
-    
-    public func getCurrentWindSpeedUnit() async throws -> WindSpeedUnit {
-        let defaultUnit: WindSpeedUnit = .milesPerHour
-        
-        do {
-            let abbreviation = try await localDataSource.fetchCurrentWindSpeedUnit()
-            guard let unit = WindSpeedUnit(abbreviation: abbreviation) else {
-                return defaultUnit
-            }
-            
-            return unit
-        } catch {
-            return defaultUnit
+            return Settings.default()
         }
     }
     
@@ -187,24 +95,15 @@ public final class DefaultSettingsRepository: SettingsRepository {
         }
     }
     
-    public func setCurrentPressureUnit(_ pressureUnit: PressureUnit) async throws {
-        try await localDataSource.updateCurrentPressureUnit(pressureUnit.abbreviation)
+    public func setSettings(_ settings: Settings) async throws {
+        let request = WeatherSettingsUpdateRequest(
+            pressureUnitAbbreviation: settings.pressureUnit.abbreviation,
+            temperatureUnitAbbreviation: settings.temperatureUnit.abbreviation,
+            windSpeedUnitAbbreviation: settings.windSpeedUnit.abbreviation)
+        
+        try await localDataSource.updateWeatherSettings(request)
         await MainActor.run {
-            DefaultSettingsRepository.pressureUnitPublisher.send(pressureUnit)
-        }
-    }
-    
-    public func setCurrentTemperatureUnit(_ temperatureUnit: TemperatureUnit) async throws {
-        try await localDataSource.updateCurrentTemperatureUnit(temperatureUnit.abbreviation)
-        await MainActor.run {
-            DefaultSettingsRepository.temperatureUnitPublisher.send(temperatureUnit)
-        }
-    }
-    
-    public func setCurrentWindSpeedUnit(_ windSpeedUnit: WindSpeedUnit) async throws {
-        try await localDataSource.updateCurrentWindSpeedUnit(windSpeedUnit.abbreviation)
-        await MainActor.run {
-            DefaultSettingsRepository.windSpeedUnitPublisher.send(windSpeedUnit)
+            DefaultSettingsRepository.settingsPublisher.send(settings)
         }
     }
     

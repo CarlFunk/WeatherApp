@@ -14,13 +14,6 @@ public final class GetSettingsUseCase {
     @Dependency(SettingsRepository.self) private static var repository
     
     public static func run() async throws -> Settings {
-        let pressureUnit = try await repository.getCurrentPressureUnit()
-        let temperatureUnit = try await repository.getCurrentTemperatureUnit()
-        let windSpeedUnit = try await repository.getCurrentWindSpeedUnit()
-        
-        return Settings(
-            pressureUnit: pressureUnit,
-            temperatureUnit: temperatureUnit,
-            windSpeedUnit: windSpeedUnit)
+        try await repository.getSettings()
     }
 }

@@ -6,11 +6,27 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import Foundation
+import FavoriteData
 import WeatherData
+import SettingsData
 
 extension Weather {
-    init(from response: CurrentWeatherResponse) {
+    init(
+        weatherResponse: CurrentWeatherResponse,
+        favoriteLocationsResponse: FavoriteLocationsResponse,
+        homeLocationResponse: HomeLocationResponse
+    ) {
+        self.init(
+            from: weatherResponse,
+            isFavorite: favoriteLocationsResponse.contains(weatherResponse.location.name),
+            isPrimary: homeLocationResponse == weatherResponse.location.name)
+    }
+    
+    init(
+        from response: CurrentWeatherResponse,
+        isFavorite: Bool = false,
+        isPrimary: Bool = false
+    ) {
         self.location = WeatherLocation(
             id: response.location.name,
             name: response.location.name,
@@ -19,8 +35,8 @@ extension Weather {
             coordinate: GeographicCoordinate(
                 latitude: response.location.latitude,
                 longitude: response.location.longitude),
-            isFavorite: false,
-            isPrimary: false)
+            isFavorite: isFavorite,
+            isPrimary: isPrimary)
         self.condition = WeatherCondition(
             from: response.current.condition)
         self.temperature = Temperature(

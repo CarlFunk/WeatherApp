@@ -7,7 +7,6 @@
 //
 
 import Dependency
-import Foundation
 import WeatherDomain
 
 public final class GetCurrentForecastForLocationUseCase {

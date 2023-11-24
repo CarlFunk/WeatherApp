@@ -29,31 +29,14 @@ public final class DefaultSettingsLocalDataSource: SettingsLocalDataSource {
         self.store = store
     }
     
-    public func fetchCurrentPressureUnit() async throws -> String {
-        guard let storedUnitString = store.string(forKey: StorageKeys.pressureUnit.rawValue) else {
-            throw DataSourceError.pressureUnitNotSet
-        }
-        
-        return storedUnitString
+    public func fetchWeatherSettings() async throws -> WeatherSettingsResponse {
+        WeatherSettingsResponse(
+            pressureUnit: store.string(forKey: StorageKeys.pressureUnit.rawValue) ?? "",
+            temperatureUnit: store.string(forKey: StorageKeys.temperatureUnit.rawValue) ?? "",
+            windSpeedUnit: store.string(forKey: StorageKeys.windSpeedUnit.rawValue) ?? "")
     }
     
-    public func fetchCurrentTemperatureUnit() async throws -> String {
-        guard let storedUnitString = store.string(forKey: StorageKeys.temperatureUnit.rawValue) else {
-            throw DataSourceError.temperatureUnitNotSet
-        }
-        
-        return storedUnitString
-    }
-    
-    public func fetchCurrentWindSpeedUnit() async throws -> String {
-        guard let storedUnitString = store.string(forKey: StorageKeys.windSpeedUnit.rawValue) else {
-            throw DataSourceError.windSpeedUnitNotSet
-        }
-        
-        return storedUnitString
-    }
-    
-    public func fetchHomeLocation() async throws -> String {
+    public func fetchHomeLocation() async throws -> HomeLocationResponse {
         guard let storedHomeLocation = store.string(forKey: StorageKeys.homeLocation.rawValue) else {
             throw DataSourceError.homeLocationNotSet
         }
@@ -61,16 +44,10 @@ public final class DefaultSettingsLocalDataSource: SettingsLocalDataSource {
         return storedHomeLocation
     }
     
-    public func updateCurrentPressureUnit(_ abbreviation: String) async throws {
-        store.setValue(abbreviation, forKey: StorageKeys.pressureUnit.rawValue)
-    }
-    
-    public func updateCurrentTemperatureUnit(_ abbreviation: String) async throws {
-        store.setValue(abbreviation, forKey: StorageKeys.temperatureUnit.rawValue)
-    }
-    
-    public func updateCurrentWindSpeedUnit(_ abbreviation: String) async throws {
-        store.setValue(abbreviation, forKey: StorageKeys.windSpeedUnit.rawValue)
+    public func updateWeatherSettings(_ request: WeatherSettingsUpdateRequest) async throws {
+        store.setValue(request.pressureUnitAbbreviation, forKey: StorageKeys.pressureUnit.rawValue)
+        store.setValue(request.temperatureUnitAbbreviation, forKey: StorageKeys.temperatureUnit.rawValue)
+        store.setValue(request.windSpeedUnitAbbreviation, forKey: StorageKeys.windSpeedUnit.rawValue)
     }
     
     public func updateHomeLocation(_ location: String) async throws {

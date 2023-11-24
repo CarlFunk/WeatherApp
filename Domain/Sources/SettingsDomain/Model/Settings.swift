@@ -26,6 +26,13 @@ public struct Settings {
 }
 
 public extension Settings {
+    static func `default`() -> Settings {
+        Settings(
+            pressureUnit: .millibar,
+            temperatureUnit: .fahrenheit,
+            windSpeedUnit: .milesPerHour)
+    }
+    
     static func mock() -> Settings {
         Settings(
             pressureUnit: .mock(),
