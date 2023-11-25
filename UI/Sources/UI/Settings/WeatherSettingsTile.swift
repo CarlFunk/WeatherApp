@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import SettingsDomain
+import UseCases
 import WeatherDomain
 
 public struct WeatherSettingsTile: View, ActionableView {
@@ -16,20 +18,13 @@ public struct WeatherSettingsTile: View, ActionableView {
         case viewWindSpeedSettings
     }
     
-    public var selectedPressureUnit: PressureUnit
-    public var selectedTemperatureUnit: TemperatureUnit
-    public var selectedWindSpeedUnit: WindSpeedUnit
+    @State private var settings: Settings = .mock()
+    
     public let action: ActionClosure
     
     public init(
-        selectedPressureUnit: PressureUnit,
-        selectedTemperatureUnit: TemperatureUnit,
-        selectedWindSpeedUnit: WindSpeedUnit,
         action: @escaping ActionClosure
     ) {
-        self.selectedPressureUnit = selectedPressureUnit
-        self.selectedTemperatureUnit = selectedTemperatureUnit
-        self.selectedWindSpeedUnit = selectedWindSpeedUnit
         self.action = action
     }
     
@@ -41,6 +36,9 @@ public struct WeatherSettingsTile: View, ActionableView {
             divider()
             windSpeedOption()
         }
+        .redacted(when: settings == .mock())
+        .disabled(settings == .mock())
+        .task(loadSettingsData)
     }
     
     private func divider() -> some View {
@@ -51,7 +49,7 @@ public struct WeatherSettingsTile: View, ActionableView {
     private func pressureOption() -> some View {
         ActionRow(
             label: "Pressure",
-            value: selectedPressureUnit.abbreviation
+            value: settings.pressureUnit.abbreviation
         ) { rowAction in
             switch rowAction {
             case .takeAction:
@@ -63,7 +61,7 @@ public struct WeatherSettingsTile: View, ActionableView {
     private func temperatureOption() -> some View {
         ActionRow(
             label: "Temperature",
-            value: selectedTemperatureUnit.name
+            value: settings.temperatureUnit.name
         ) { rowAction in
             switch rowAction {
             case .takeAction:
@@ -75,7 +73,7 @@ public struct WeatherSettingsTile: View, ActionableView {
     private func windSpeedOption() -> some View {
         ActionRow(
             label: "Wind Speed",
-            value: selectedWindSpeedUnit.abbreviation
+            value: settings.windSpeedUnit.abbreviation
         ) { rowAction in
             switch rowAction {
             case .takeAction:
@@ -83,18 +81,22 @@ public struct WeatherSettingsTile: View, ActionableView {
             }
         }
     }
+    
+    @Sendable
+    private func loadSettingsData() async {
+        let settingsStream = GetSettingsSubscriptionUseCase.run()
+        for await settings in settingsStream {
+            self.settings = settings
+        }
+    }
 }
 
 struct SettingsOptionsView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            WeatherSettingsTile(
-                selectedPressureUnit: .mock(),
-                selectedTemperatureUnit: .mock(),
-                selectedWindSpeedUnit: .mock(),
-                action: { _ in })
-            .background(BrandTheme.Color.Background.primary)
-            .previewLayout(.sizeThatFits)
+            WeatherSettingsTile(action: { _ in })
+                .background(BrandTheme.Color.Background.primary)
+                .previewLayout(.sizeThatFits)
         }
     }
 }

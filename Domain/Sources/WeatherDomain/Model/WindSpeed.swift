@@ -41,24 +41,37 @@ public struct WindSpeed: Equatable {
     
     public func formatted(
         unit: WindSpeedUnit,
-        maxFractionDigits: Int = 3,
         includeUnitAbbreviation: Bool
     ) -> String {
-        let valueDecimal = getValue(for: unit)
-        let numberFormatter = NumberFormatter()
-        numberFormatter.maximumFractionDigits = maxFractionDigits
-        let value = numberFormatter.string(from: NSNumber(value: valueDecimal)) ?? "\(valueDecimal)"
-        let unitAbbreviation = unit.abbreviation
-        
-        return includeUnitAbbreviation ? "\(value) \(unitAbbreviation)" : "\(value)"
+        getMeasurement(for: unit)
+            .formatted(
+                .measurement(
+                    width: .abbreviated,
+                    usage: .asProvided,
+                    numberFormatStyle: .number
+                        .precision(
+                            .integerAndFractionLength(
+                                integerLimits: 0...3,
+                                fractionLimits: 0...1))
+                        .grouping(.never)))
+            .trimmingCharacters(
+                in: includeUnitAbbreviation
+                ? CharacterSet()
+                : .whitespaces.union(.letters).union(.punctuationCharacters))
     }
 }
 
 public extension WindSpeed {
-    func getValue(for unit: WindSpeedUnit) -> Double {
+    func getMeasurement(for unit: WindSpeedUnit) -> Measurement<UnitSpeed> {
         switch unit {
-        case .kilometersPerHour:    return kilometersPerHour
-        case .milesPerHour:         return milesPerHour
+        case .kilometersPerHour:
+            return Measurement(
+                value: kilometersPerHour,
+                unit: UnitSpeed.kilometersPerHour)
+        case .milesPerHour:
+            return Measurement(
+                value: milesPerHour,
+                unit: UnitSpeed.milesPerHour)
         }
     }
 }

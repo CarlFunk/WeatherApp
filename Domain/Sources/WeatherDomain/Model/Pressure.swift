@@ -41,24 +41,37 @@ public struct Pressure: Equatable {
     
     public func formatted(
         unit: PressureUnit,
-        maxFractionDigits: Int = 3,
         includeUnitAbbreviation: Bool
     ) -> String {
-        let valueDecimal = getValue(for: unit)
-        let numberFormatter = NumberFormatter()
-        numberFormatter.maximumFractionDigits = maxFractionDigits
-        let value = numberFormatter.string(from: NSNumber(value: valueDecimal)) ?? "\(valueDecimal)"
-        let unitAbbreviation = unit.abbreviation
-        
-        return includeUnitAbbreviation ? "\(value) \(unitAbbreviation)" : "\(value)"
+        getMeasurement(for: unit)
+            .formatted(
+                .measurement(
+                    width: .abbreviated,
+                    usage: .asProvided,
+                    numberFormatStyle: .number
+                        .precision(
+                            .integerAndFractionLength(
+                                integerLimits: 0...4,
+                                fractionLimits: 0...3))
+                        .grouping(.never)))
+            .trimmingCharacters(
+                in: includeUnitAbbreviation
+                ? CharacterSet()
+                : .whitespaces.union(.letters).union(.punctuationCharacters))
     }
 }
 
 public extension Pressure {
-    func getValue(for unit: PressureUnit) -> Double {
+    func getMeasurement(for unit: PressureUnit) -> Measurement<UnitPressure> {
         switch unit {
-        case .inch:     return inch
-        case .millibar: return millibar
+        case .inch:
+            return Measurement(
+                value: inch,
+                unit: UnitPressure.inchesOfMercury)
+        case .millibar:
+            return Measurement(
+                value: millibar,
+                unit: UnitPressure.millibars)
         }
     }
 }

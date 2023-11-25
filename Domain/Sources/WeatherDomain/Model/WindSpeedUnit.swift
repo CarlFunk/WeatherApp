@@ -15,7 +15,7 @@ public enum WindSpeedUnit: CaseIterable, Equatable, Identifiable {
     public init?(abbreviation: String) {
         switch abbreviation {
         case "km/h":   self = .kilometersPerHour
-        case "mi/h":   self = .milesPerHour
+        case "mph":   self = .milesPerHour
         default:    return nil
         }
     }
@@ -34,7 +34,7 @@ public enum WindSpeedUnit: CaseIterable, Equatable, Identifiable {
     public var abbreviation: String {
         switch self {
         case .kilometersPerHour:    return "km/h"
-        case .milesPerHour:         return "mi/h"
+        case .milesPerHour:         return "mph"
         }
     }
 }

@@ -11,9 +11,9 @@ public final class MockSettingsLocalDataSource: SettingsLocalDataSource {
     
     public func fetchWeatherSettings() async throws -> WeatherSettingsResponse {
         WeatherSettingsResponse(
-            pressureUnit: "mBar",
+            pressureUnit: "mbar",
             temperatureUnit: "F",
-            windSpeedUnit: "mi/h")
+            windSpeedUnit: "mph")
     }
     
     public func fetchHomeLocation() async throws -> HomeLocationResponse { "" }

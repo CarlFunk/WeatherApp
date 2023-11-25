@@ -9,25 +9,36 @@
 import Foundation
 import WeatherDomain
 
-public struct Settings {
+public struct Settings: Equatable, Identifiable {
+    public let id: String
     public let pressureUnit: PressureUnit
     public let temperatureUnit: TemperatureUnit
     public let windSpeedUnit: WindSpeedUnit
     
     public init(
+        id: String = UUID().uuidString,
         pressureUnit: PressureUnit,
         temperatureUnit: TemperatureUnit,
         windSpeedUnit: WindSpeedUnit
     ) {
+        self.id = id
         self.pressureUnit = pressureUnit
         self.temperatureUnit = temperatureUnit
         self.windSpeedUnit = windSpeedUnit
+    }
+    
+    public func updated(properties: [PartialKeyPath<Settings>: Any]) -> Settings {
+        Settings(
+            pressureUnit: properties[\.pressureUnit] as? PressureUnit ?? pressureUnit,
+            temperatureUnit: properties[\.temperatureUnit] as? TemperatureUnit ?? temperatureUnit,
+            windSpeedUnit: properties[\.windSpeedUnit] as? WindSpeedUnit ?? windSpeedUnit)
     }
 }
 
 public extension Settings {
     static func `default`() -> Settings {
         Settings(
+            id: "Default",
             pressureUnit: .millibar,
             temperatureUnit: .fahrenheit,
             windSpeedUnit: .milesPerHour)
@@ -35,6 +46,7 @@ public extension Settings {
     
     static func mock() -> Settings {
         Settings(
+            id: "Mock",
             pressureUnit: .mock(),
             temperatureUnit: .mock(),
             windSpeedUnit: .mock())

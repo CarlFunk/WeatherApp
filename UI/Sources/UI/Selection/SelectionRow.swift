@@ -9,18 +9,21 @@
 import SettingsDomain
 import SwiftUI
 
-public struct SelectionRow: View {
-    public let option: any SelectionOption
+public struct SelectionRow<Option: SelectionOption>: View {
+    public let option: Option
+    public let isSelected: Bool
     
     public init(
-        option: any SelectionOption
+        option: Option,
+        isSelected: Bool
     ) {
         self.option = option
+        self.isSelected = isSelected
     }
     
     public var body: some View {
         HStack(spacing: BrandTheme.Spacing.small) {
-            Text(option.name)
+            Text(option.selectionValue)
                 .font(.brand(style: .medium, size: 14))
                 .foregroundColor(BrandTheme.Color.Text.primary)
             
@@ -28,7 +31,7 @@ public struct SelectionRow: View {
             
             Image(.system(.checkmark))
                 .foregroundColor(BrandTheme.Color.Text.secondary)
-                .opacity(option.isSelected ? 1 : 0)
+                .opacity(isSelected ? 1 : 0)
         }
         .padding(BrandTheme.Spacing.standard)
     }
@@ -36,7 +39,7 @@ public struct SelectionRow: View {
 
 struct SelectionRow_Previews: PreviewProvider {
     static var previews: some View {
-        SelectionRow(option: SelectionOptions.mock().first!)
+        SelectionRow(option: DefaultSelectionOption.mock(id: "1"), isSelected: true)
             .previewLayout(.sizeThatFits)
     }
 }

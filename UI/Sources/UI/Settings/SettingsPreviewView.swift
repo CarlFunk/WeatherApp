@@ -56,6 +56,7 @@ public struct SettingsPreviewView: View {
             }
         }
         .frame(maxWidth: .infinity)
+        .task(loadSettingsData)
     }
     
     private var locationInUseIndicator: some View {
@@ -167,6 +168,14 @@ public struct SettingsPreviewView: View {
             Text(weather.windSpeed.formatted(unit: settings.windSpeedUnit, includeUnitAbbreviation: true))
                 .font(.brand(style: .medium, size: 12))
                 .foregroundColor(BrandTheme.Color.Text.primary)
+        }
+    }
+    
+    @Sendable
+    private func loadSettingsData() async {
+        let settingsStream = GetSettingsSubscriptionUseCase.run()
+        for await settings in settingsStream {
+            self.settings = settings
         }
     }
 }

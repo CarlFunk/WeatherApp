@@ -15,7 +15,7 @@ public enum PressureUnit: CaseIterable, Equatable, Identifiable {
     public init?(abbreviation: String) {
         switch abbreviation {
         case "inHg":    self = .inch
-        case "mBar":    self = .millibar
+        case "mbar":    self = .millibar
         default:        return nil
         }
     }
@@ -34,7 +34,7 @@ public enum PressureUnit: CaseIterable, Equatable, Identifiable {
     public var abbreviation: String {
         switch self {
         case .inch:      return "inHg"
-        case .millibar:   return "mBar"
+        case .millibar:   return "mbar"
         }
     }
 }

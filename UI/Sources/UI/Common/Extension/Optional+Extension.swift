@@ -12,4 +12,8 @@ public extension Optional {
     var isNil: Bool {
         return self == nil
     }
+    
+    var isNonNil: Bool {
+        return self != nil
+    }
 }

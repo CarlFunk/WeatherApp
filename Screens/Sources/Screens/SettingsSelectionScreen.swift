@@ -11,18 +11,20 @@ import SettingsDomain
 import UI
 import WeatherDomain
 
-public struct SettingsSelectionScreen: View {
+public struct SettingsSelectionScreen<Option: SelectionOption>: View {
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var options: SelectionOptions
+    @Binding var selectionGroup: SelectionGroup<Option>
     
-    public init(options: Binding<SelectionOptions>) {
-        self._options = options
+    public init(
+        selectionGroup: Binding<SelectionGroup<Option>>
+    ) {
+        self._selectionGroup = selectionGroup
     }
     
     public var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            SelectionRows(options: $options)
+            SelectionRows(selectionGroup: $selectionGroup)
         }
         .frame(maxWidth: .infinity)
         .background(BrandTheme.Color.Background.primary)
@@ -41,11 +43,10 @@ public struct SettingsSelectionScreen: View {
 
 struct SelectionScreen_Previews: PreviewProvider {
     private struct SettingsSelectionPreviewView: View {
-        @State private var options = SelectionOptions.mock()
+        @State private var selectionGroup = SelectionGroup<DefaultSelectionOption>.mock()
         
         var body: some View {
-            SettingsSelectionScreen(
-                options: $options)
+            SettingsSelectionScreen(selectionGroup: $selectionGroup)
         }
     }
     

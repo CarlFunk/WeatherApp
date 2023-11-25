@@ -6,16 +6,17 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
+import Foundation
 import SettingsDomain
 import SwiftUI
 
-public struct SelectionRows: View {
-    @Binding var options: SelectionOptions
+public struct SelectionRows<Option: SelectionOption>: View {
+    @Binding var selectionGroup: SelectionGroup<Option>
     
     public init(
-        options: Binding<SelectionOptions>
+        selectionGroup: Binding<SelectionGroup<Option>>
     ) {
-        self._options = options
+        self._selectionGroup = selectionGroup
     }
     
     public var body: some View {
@@ -28,16 +29,18 @@ public struct SelectionRows: View {
         ) {
             BrandDivider()
             
-            ForEach($options, id:\.id) { option in
+            ForEach(selectionGroup.options) { option in
                 VStack(spacing: BrandTheme.Spacing.none) {
-                    SelectionRow(option: option.wrappedValue)
+                    SelectionRow(
+                        option: option,
+                        isSelected: selectionGroup.selections.contains(option))
                     
                     BrandDivider()
                 }
                 .frame(maxWidth: .infinity)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    option.isSelected.wrappedValue = !option.isSelected.wrappedValue
+                    selectionGroup.set(option)
                 }
             }
         }
@@ -45,10 +48,10 @@ public struct SelectionRows: View {
 }
 
 struct SelectionRows_Previews: PreviewProvider {
-    @State static var options = SelectionOptions.mock()
+    @State static var selectionGroup = SelectionGroup<DefaultSelectionOption>.mock()
     
     static var previews: some View {
-        SelectionRows(options: $options)
+        SelectionRows(selectionGroup: $selectionGroup)
             .previewLayout(.sizeThatFits)
     }
 }

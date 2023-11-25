@@ -43,9 +43,16 @@ public struct Temperature: Equatable {
         unit: TemperatureUnit,
         includeUnitAbbreviation: Bool
     ) -> String {
-        return includeUnitAbbreviation
-        ? getMeasurement(for: unit).formatted(.measurement(width: .abbreviated))
-        : getMeasurement(for: unit).formatted(.measurement(width: .narrow))
+        getMeasurement(for: unit)
+            .formatted(
+                .measurement(
+                    width: .abbreviated,
+                    usage: .asProvided,
+                    hidesScaleName: includeUnitAbbreviation == false,
+                    numberFormatStyle: .number.precision(
+                        .integerAndFractionLength(
+                            integerLimits: 0...3,
+                            fractionLimits: 0...0))))
     }
 }
 

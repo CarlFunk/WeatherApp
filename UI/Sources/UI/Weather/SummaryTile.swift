@@ -58,6 +58,7 @@ public struct SummaryTile: View {
         }
         .frame(maxWidth: .infinity)
         .task(id: location, loadData)
+        .task(loadSettingsData)
     }
     
     private var detailsRow: some View {
@@ -106,6 +107,14 @@ public struct SummaryTile: View {
             self.weather = weatherModel
         } catch {
             print(error)
+        }
+    }
+    
+    @Sendable
+    private func loadSettingsData() async {
+        let settingsStream = GetSettingsSubscriptionUseCase.run()
+        for await settings in settingsStream {
+            self.settings = settings
         }
     }
 }

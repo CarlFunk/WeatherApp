@@ -55,6 +55,7 @@ public struct LocationGrid: View, NavigatableView {
             .animation(.spring(), value: weatherCollection.count)
         }
         .task(id: locations, loadData)
+        .task(loadSettingsData)
     }
     
     @Sendable
@@ -64,6 +65,14 @@ public struct LocationGrid: View, NavigatableView {
             self.weatherCollection = weatherCollection
         } catch {
             
+        }
+    }
+    
+    @Sendable
+    private func loadSettingsData() async {
+        let settingsStream = GetSettingsSubscriptionUseCase.run()
+        for await settings in settingsStream {
+            self.settings = settings
         }
     }
 }
