@@ -17,40 +17,69 @@ import WeatherData
 import WeatherDomain
 
 public final class SetupDependenciesUseCase {
-    
-    public static func run() {
-        
-        // MARK: - DataSource
-        
-        DependencyContainer.shared.register(
-            type: FavoriteLocalDataSource.self,
-            item: isPreviewEnvironment() ? MockFavoriteLocalDataSource() : DefaultFavoriteLocalDataSource() )
-        DependencyContainer.shared.register(
-            type: SettingsLocalDataSource.self,
-            item: isPreviewEnvironment() ? MockSettingsLocalDataSource() : DefaultSettingsLocalDataSource())
-        DependencyContainer.shared.register(
-            type: RemoteWeatherDataSource.self,
-            item: isPreviewEnvironment() ? MockRemoteWeatherDataSource() : DefaultRemoteWeatherDataSource())
-        
-        // MARK: - Repositories
-        
-        DependencyContainer.shared.register(
-            type: FavoriteRepository.self,
-            item: isPreviewEnvironment() ? MockFavoriteRepository() : DefaultFavoriteRepository())
-        DependencyContainer.shared.register(
-            type: PermissionRepository.self,
-            item: isPreviewEnvironment() ? MockPermissionRepository() : DefaultPermissionRepository())
-        DependencyContainer.shared.register(
-            type: SettingsRepository.self,
-            item: isPreviewEnvironment() ? MockSettingsRepository() : DefaultSettingsRepository())
-        DependencyContainer.shared.register(
-            type: WeatherRepository.self,
-            item: isPreviewEnvironment() ? MockWeatherRepository() : DefaultWeatherRepository())
-        
+    public enum Environment {
+        case live
+        case mock
     }
     
-    private static func isPreviewEnvironment() -> Bool {
-        return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+    public static func run(environment: Environment) {
+        setupDataSourceDependencies(environment: environment)
+        setupRepositoryDependencies(environment: environment)
     }
     
+    private static func setupDataSourceDependencies(environment: Environment) {
+        switch environment {
+        case .live:
+            DependencyContainer.shared.register(
+                type: FavoriteLocalDataSource.self,
+                item: DefaultFavoriteLocalDataSource())
+            DependencyContainer.shared.register(
+                type: SettingsLocalDataSource.self,
+                item: DefaultSettingsLocalDataSource())
+            DependencyContainer.shared.register(
+                type: RemoteWeatherDataSource.self,
+                item: DefaultRemoteWeatherDataSource())
+        case .mock:
+            DependencyContainer.shared.register(
+                type: FavoriteLocalDataSource.self,
+                item: MockFavoriteLocalDataSource())
+            DependencyContainer.shared.register(
+                type: SettingsLocalDataSource.self,
+                item: MockSettingsLocalDataSource())
+            DependencyContainer.shared.register(
+                type: RemoteWeatherDataSource.self,
+                item: MockRemoteWeatherDataSource())
+        }
+    }
+    
+    private static func setupRepositoryDependencies(environment: Environment) {
+        switch environment {
+        case .live:
+            DependencyContainer.shared.register(
+                type: FavoriteRepository.self,
+                item: DefaultFavoriteRepository())
+            DependencyContainer.shared.register(
+                type: PermissionRepository.self,
+                item: DefaultPermissionRepository())
+            DependencyContainer.shared.register(
+                type: SettingsRepository.self,
+                item: DefaultSettingsRepository())
+            DependencyContainer.shared.register(
+                type: WeatherRepository.self,
+                item: DefaultWeatherRepository())
+        case .mock:
+            DependencyContainer.shared.register(
+                type: FavoriteRepository.self,
+                item: MockFavoriteRepository())
+            DependencyContainer.shared.register(
+                type: PermissionRepository.self,
+                item: MockPermissionRepository())
+            DependencyContainer.shared.register(
+                type: SettingsRepository.self,
+                item: MockSettingsRepository())
+            DependencyContainer.shared.register(
+                type: WeatherRepository.self,
+                item: MockWeatherRepository())
+        }
+    }
 }

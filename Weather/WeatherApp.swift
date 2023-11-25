@@ -16,7 +16,7 @@ struct WeatherApp: App {
         UITabBar.appearance().isOpaque = true
         UITabBar.appearance().barTintColor = UIColor(BrandTheme.Color.Background.primary)
         
-        SetupDependenciesUseCase.run()
+        SetupDependenciesUseCase.run(environment: .live)
     }
     
     var body: some Scene {
