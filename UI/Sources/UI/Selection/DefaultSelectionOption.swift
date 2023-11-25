@@ -28,12 +28,12 @@ extension DefaultSelectionOption {
 }
 
 public extension SelectionGroup where Option == DefaultSelectionOption {
-    static func mock() -> SelectionGroup {
+    static func mock(mode: Mode = .single) -> SelectionGroup {
         let options = SelectionOptions<DefaultSelectionOption>.mock()
         let selection = options.first
         
         return SelectionGroup(
-            mode: .single,
+            mode: mode,
             options: options,
             selections: selection.isNonNil ? [selection!] : [])
     }

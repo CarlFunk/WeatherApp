@@ -43,7 +43,7 @@ public struct SettingsSelectionScreen<Option: SelectionOption>: View {
 
 struct SelectionScreen_Previews: PreviewProvider {
     private struct SettingsSelectionPreviewView: View {
-        @State private var selectionGroup = SelectionGroup<DefaultSelectionOption>.mock()
+        @State private var selectionGroup = SelectionGroup<DefaultSelectionOption>.mock(mode: .single)
         
         var body: some View {
             SettingsSelectionScreen(selectionGroup: $selectionGroup)
