@@ -96,7 +96,7 @@ struct DailyForecastTile_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
             DailyForecastTile(
-                location: WeatherLocation.standardQuery(),
+                location: LocationQuery.standardValue(),
                 action: { _ in })
             .padding(.vertical)
             .background(BrandTheme.Color.Background.primary)

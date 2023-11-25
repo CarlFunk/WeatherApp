@@ -40,6 +40,7 @@ public extension SearchLocation {
                 name: name,
                 region: "Texas",
                 country: "United States of America",
+                query: "dallas-texas-united-states-of-america",
                 coordinate: GeographicCoordinate(
                     latitude: 32.78,
                     longitude: -96.8),

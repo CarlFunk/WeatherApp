@@ -56,7 +56,7 @@ public final class DefaultSettingsRepository: SettingsRepository {
                     do {
                         homeLocation = try await self.getHomeLocation()
                     } catch {
-                        homeLocation = WeatherLocation.standardQuery()
+                        homeLocation = LocationQuery.standardValue()
                     }
                     
                     DefaultSettingsRepository.homeLocationPublisher.value = homeLocation
@@ -86,7 +86,7 @@ public final class DefaultSettingsRepository: SettingsRepository {
     }
     
     public func getHomeLocation() async throws -> String {
-        let defaultHomeLocation: String = WeatherLocation.standardQuery()
+        let defaultHomeLocation: String = LocationQuery.standardValue()
         
         do {
             return try await localDataSource.fetchHomeLocation()

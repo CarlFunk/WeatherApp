@@ -20,8 +20,8 @@ extension SearchLocationResults {
             .map { locationResponseModel in
                 SearchLocation(
                     from: locationResponseModel,
-                    isFavorite: favoriteLocationsResponse.contains(locationResponseModel.name),
-                    isPrimary: homeLocationResponse == locationResponseModel.name)
+                    isFavorite: favoriteLocationsResponse.contains(locationResponseModel.query),
+                    isPrimary: homeLocationResponse == locationResponseModel.query)
             }
     }
 }

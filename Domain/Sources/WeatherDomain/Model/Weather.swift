@@ -45,12 +45,19 @@ public struct Weather: Equatable {
 
 public extension Weather {
     static func mock(name: String = "Dallas") -> Weather {
-        Weather(
+        let region = "Texas"
+        let country = "United States of America"
+        
+        return Weather(
             location: WeatherLocation(
                 id: "Mock",
                 name: name,
-                region: "Texas",
-                country: "United States of America",
+                region: region,
+                country: country,
+                query: LocationQuery.generate(
+                    name: name,
+                    region: region,
+                    country: country),
                 coordinate: GeographicCoordinate(
                     latitude: 32.78,
                     longitude: -96.8),

@@ -28,15 +28,15 @@ public final class MockFavoriteRepository: FavoriteRepository {
     
     public func addLocation(_ location: WeatherLocation) async throws {
         var locations = locationsPublisher.value
-        if !locations.contains(location.query) {
-            locations.append(location.query)
+        if !locations.contains(location.query.value) {
+            locations.append(location.query.value)
         }
         locationsPublisher.send(locations)
     }
     
     public func removeLocation(_ location: WeatherLocation) async throws {
         var locations = locationsPublisher.value
-        locations.removeAll(where: { $0 == location.query })
+        locations.removeAll(where: { $0 == location.query.value })
         locationsPublisher.send(locations)
     }
     

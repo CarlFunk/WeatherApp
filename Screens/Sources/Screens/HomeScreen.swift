@@ -13,7 +13,7 @@ import UseCases
 import WeatherDomain
 
 public struct HomeScreen: View {
-    @State private var location: String = WeatherLocation.standardQuery()
+    @State private var location: String = LocationQuery.standardValue()
     
     public init() { }
     

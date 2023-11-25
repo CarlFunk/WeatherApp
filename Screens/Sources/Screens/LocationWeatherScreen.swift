@@ -175,7 +175,7 @@ public struct LocationWeatherScreen: View {
 struct LocationWeatherScreen_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            LocationWeatherScreen(location: WeatherLocation.standardQuery())
+            LocationWeatherScreen(location: LocationQuery.standardValue())
         }
     }
 }

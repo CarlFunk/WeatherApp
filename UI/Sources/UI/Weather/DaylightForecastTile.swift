@@ -114,7 +114,7 @@ public struct DaylightForecastTile: View {
 struct DaylightForecastTile_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            DaylightForecastTile(location: WeatherLocation.standardQuery())
+            DaylightForecastTile(location: LocationQuery.standardValue())
                 .background(BrandTheme.Color.Background.primary)
                 .previewLayout(.sizeThatFits)
         }

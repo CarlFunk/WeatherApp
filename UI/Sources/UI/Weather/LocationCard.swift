@@ -16,17 +16,19 @@ public struct LocationCard: View, NavigatableView {
         case viewLocation(WeatherLocation)
     }
     
-    @Binding public var weather: Weather
-    public var settings: Settings
+    @Environment(\.isSwiftUIPreview) private var isSwiftUIPreview
+    
+    @State private var weather: Weather = .mock()
+    @State private var settings: Settings = .mock()
+    
+    public let location: String
     public let navigationRequest: NavigationRequestClosure
     
     public init(
-        weather: Binding<Weather>,
-        settings: Settings,
+        location: String,
         navigationRequest: @escaping NavigationRequestClosure
     ) {
-        self._weather = weather
-        self.settings = settings
+        self.location = location
         self.navigationRequest = navigationRequest
     }
     
@@ -54,6 +56,7 @@ public struct LocationCard: View, NavigatableView {
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .fill(BrandTheme.Color.Background.secondary).shadow(radius: 4))
+        .redacted(when: weather == .mock() && settings == .mock() && !isSwiftUIPreview)
         .onTapGesture {
             navigationRequest(.viewLocation(weather.location))
         }
@@ -78,6 +81,8 @@ public struct LocationCard: View, NavigatableView {
                 }
             }
         }
+        .task(id: location, loadData)
+        .task(loadSettingsData)
     }
     
     private var temperature: some View {
@@ -134,14 +139,31 @@ public struct LocationCard: View, NavigatableView {
                 .foregroundColor(BrandTheme.Color.Text.primary)
         }
     }
+    
+    @Sendable
+    private func loadData() async {
+        do {
+            let weather = try await GetCurrentWeatherForLocationUseCase.run(location: location)
+            self.weather = weather
+        } catch {
+            
+        }
+    }
+    
+    @Sendable
+    private func loadSettingsData() async {
+        let settingsStream = GetSettingsSubscriptionUseCase.run()
+        for await settings in settingsStream {
+            self.settings = settings
+        }
+    }
 }
 
 struct FavoriteLocationView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
             LocationCard(
-                weather: .constant(.mock()),
-                settings: .mock(),
+                location: LocationQuery.standardValue(),
                 navigationRequest: { _ in })
             .background(BrandTheme.Color.Background.primary)
             .previewLayout(.sizeThatFits)

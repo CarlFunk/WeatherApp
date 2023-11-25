@@ -122,7 +122,7 @@ public struct SummaryTile: View {
 struct SummaryTile_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            SummaryTile(location: WeatherLocation.standardQuery())
+            SummaryTile(location: LocationQuery.standardValue())
                 .background(BrandTheme.Color.Background.primary)
                 .previewLayout(.sizeThatFits)
         }

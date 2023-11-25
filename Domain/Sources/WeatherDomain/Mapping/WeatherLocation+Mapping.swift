@@ -1,23 +1,21 @@
 //
-//  SearchLocation+Mapping.swift
+//  WeatherLocation+Mapping.swift
 //  WeatherDomain
 //
-//  Created by Carl Funk on 11/21/22.
-//  Copyright © 2022 Carl Funk. All rights reserved.
+//  Created by Carl Funk on 11/24/23.
+//  Copyright © 2023 Carl Funk. All rights reserved.
 //
 
-import Foundation
 import WeatherData
 
-extension SearchLocation {
+extension WeatherLocation {
     init(
-        from response: SearchLocationInnerResponseModel,
+        from response: LocationInnerResponseModel,
         isFavorite: Bool = false,
         isPrimary: Bool = false
     ) {
-        self.id = response.id
-        self.location = WeatherLocation(
-            id: String(response.id),
+        self.init(
+            id: response.name,
             name: response.name,
             region: response.region,
             country: response.country,
@@ -30,6 +28,5 @@ extension SearchLocation {
                 longitude: response.longitude),
             isFavorite: isFavorite,
             isPrimary: isPrimary)
-        self.locationQuery = response.query
     }
 }

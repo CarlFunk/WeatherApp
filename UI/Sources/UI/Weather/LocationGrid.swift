@@ -17,9 +17,6 @@ public struct LocationGrid: View, NavigatableView {
         case viewLocation(WeatherLocation)
     }
     
-    @State private var weatherCollection: WeatherCollection = []
-    @State private var settings: Settings = .mock()
-    
     public let locations: [String]
     public let navigationRequest: NavigationRequestClosure
     
@@ -41,8 +38,8 @@ public struct LocationGrid: View, NavigatableView {
                 alignment: .leading,
                 spacing: BrandTheme.Spacing.medium
             ) {
-                ForEach($weatherCollection, id:\.location.query) { weather in
-                    LocationCard(weather: weather, settings: settings) { viewNavigationRequest in
+                ForEach(locations, id: \.self) { location in
+                    LocationCard(location: location) { viewNavigationRequest in
                         switch viewNavigationRequest {
                         case .viewLocation(let location):
                             navigationRequest(.viewLocation(location))
@@ -52,27 +49,7 @@ public struct LocationGrid: View, NavigatableView {
             }
             .padding(.top, BrandTheme.Spacing.small)
             .padding(.horizontal, BrandTheme.Spacing.standard)
-            .animation(.spring(), value: weatherCollection.count)
-        }
-        .task(id: locations, loadData)
-        .task(loadSettingsData)
-    }
-    
-    @Sendable
-    private func loadData() async {
-        do {
-            let weatherCollection = try await GetCurrentWeatherForLocationsUseCase.run(locations: locations)
-            self.weatherCollection = weatherCollection
-        } catch {
-            
-        }
-    }
-    
-    @Sendable
-    private func loadSettingsData() async {
-        let settingsStream = GetSettingsSubscriptionUseCase.run()
-        for await settings in settingsStream {
-            self.settings = settings
+            .animation(.spring(), value: locations.count)
         }
     }
 }
@@ -81,7 +58,7 @@ struct FavoriteLocationListView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
             LocationGrid(
-                locations: [],
+                locations: [LocationQuery.standardValue()],
                 navigationRequest: { _ in })
         }
     }

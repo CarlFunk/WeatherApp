@@ -101,7 +101,7 @@ public struct FavoriteScreen: View, NavigatableView {
         LocationSearchResultGrid(results: $searchResults) { viewNavigationRequest in
             switch viewNavigationRequest {
             case .viewLocation(let location):
-                navigationRequest(.viewLocation(id: location.query))
+                navigationRequest(.viewLocation(id: location.query.value))
             }
         }
     }
@@ -111,7 +111,7 @@ public struct FavoriteScreen: View, NavigatableView {
         LocationGrid(locations: favoriteLocations) { viewNavigationRequest in
             switch viewNavigationRequest {
             case .viewLocation(let location):
-                navigationRequest(.viewLocation(id: location.query))
+                navigationRequest(.viewLocation(id: location.query.value))
             }
         }
     }

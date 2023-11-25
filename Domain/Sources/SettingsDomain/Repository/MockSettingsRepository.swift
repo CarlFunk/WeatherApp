@@ -15,7 +15,7 @@ public final class MockSettingsRepository: SettingsRepository {
     
     public init(
         settings: Settings = .mock(),
-        homeLocation: String = WeatherLocation.standardQuery()
+        homeLocation: String = LocationQuery.standardValue()
     ) {
         self.settingsPublisher = .init(settings)
         self.homeLocationPublisher = .init(homeLocation)

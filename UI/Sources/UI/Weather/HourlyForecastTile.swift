@@ -97,7 +97,7 @@ public struct HourlyForecastTile: View {
 struct HourlyForecastTile_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            HourlyForecastTile(location: WeatherLocation.standardQuery())
+            HourlyForecastTile(location: LocationQuery.standardValue())
                 .padding(.vertical)
                 .frame(height: 150)
                 .background(BrandTheme.Color.Background.primary)

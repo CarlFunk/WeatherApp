@@ -15,7 +15,7 @@ public final class UpdateHomeLocationSettingUseCase {
     @Dependency(SettingsRepository.self) private static var repository
     
     public static func run(weather: Weather) async throws -> Weather {
-        try await repository.setHomeLocation(weather.location.query)
+        try await repository.setHomeLocation(weather.location.query.value)
         let weatherLocation = weather.location.updated(isPrimary: true)
         return weather.updated(location: weatherLocation)
     }

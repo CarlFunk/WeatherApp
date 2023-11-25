@@ -16,10 +16,12 @@ extension Weather {
         favoriteLocationsResponse: FavoriteLocationsResponse,
         homeLocationResponse: HomeLocationResponse
     ) {
+        let locationQuery = WeatherLocation(from: weatherResponse.location).query
+        
         self.init(
             from: weatherResponse,
-            isFavorite: favoriteLocationsResponse.contains(weatherResponse.location.name),
-            isPrimary: homeLocationResponse == weatherResponse.location.name)
+            isFavorite: favoriteLocationsResponse.contains(locationQuery.value),
+            isPrimary: homeLocationResponse == locationQuery.value)
     }
     
     init(
@@ -28,13 +30,7 @@ extension Weather {
         isPrimary: Bool = false
     ) {
         self.location = WeatherLocation(
-            id: response.location.name,
-            name: response.location.name,
-            region: response.location.region,
-            country: response.location.country,
-            coordinate: GeographicCoordinate(
-                latitude: response.location.latitude,
-                longitude: response.location.longitude),
+            from: response.location,
             isFavorite: isFavorite,
             isPrimary: isPrimary)
         self.condition = WeatherCondition(

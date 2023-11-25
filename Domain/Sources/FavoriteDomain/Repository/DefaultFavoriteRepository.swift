@@ -51,7 +51,7 @@ public final class DefaultFavoriteRepository: FavoriteRepository {
     
     public func addLocation(_ location: WeatherLocation) async throws {
         do {
-            try await localDataSource.addLocation(location.query)
+            try await localDataSource.addLocation(location.query.value)
             let locations = try await getLocations()
             await MainActor.run {
                 DefaultFavoriteRepository.locationsPublisher.send(locations)
@@ -63,7 +63,7 @@ public final class DefaultFavoriteRepository: FavoriteRepository {
     
     public func removeLocation(_ location: WeatherLocation) async throws {
         do {
-            try await localDataSource.removeLocation(location.query)
+            try await localDataSource.removeLocation(location.query.value)
             let locations = try await getLocations()
             await MainActor.run { DefaultFavoriteRepository.locationsPublisher.send(locations)
             }

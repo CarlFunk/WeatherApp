@@ -14,7 +14,7 @@ public struct WeatherLocation: Equatable {
     public let name: String
     public let region: String
     public let country: String
-    public let query: String
+    public let query: LocationQuery
     public let coordinate: GeographicCoordinate
     public let isFavorite: Bool
     public let isPrimary: Bool
@@ -24,7 +24,7 @@ public struct WeatherLocation: Equatable {
         name: String,
         region: String,
         country: String,
-        query: String,
+        query: LocationQuery,
         coordinate: GeographicCoordinate,
         isFavorite: Bool,
         isPrimary: Bool
@@ -39,58 +39,16 @@ public struct WeatherLocation: Equatable {
         self.isPrimary = isPrimary
     }
     
-    public init(
-        id: String,
-        name: String,
-        region: String,
-        country: String,
-        coordinate: GeographicCoordinate,
-        isFavorite: Bool,
-        isPrimary: Bool
-    ) {
-        self.id = id
-        self.name = name
-        self.region = region
-        self.country = country
-        self.query = WeatherLocation.generateQuery(
-            name: name,
-            region: region,
-            country: country)
-        self.coordinate = coordinate
-        self.isFavorite = isFavorite
-        self.isPrimary = isPrimary
-    }
-    
     public func updated(isFavorite: Bool? = nil, isPrimary: Bool? = nil) -> WeatherLocation {
         WeatherLocation(
             id: id,
             name: name,
             region: region,
             country: country,
+            query: query,
             coordinate: coordinate,
             isFavorite: isFavorite ?? self.isFavorite,
             isPrimary: isPrimary ?? self.isPrimary)
-    }
-    
-    private static func generateQuery(
-        name: String,
-        region: String,
-        country: String
-    ) -> String {
-        func separateAndCleanse(string: String) -> [String] {
-            string
-                .lowercased()
-                .components(separatedBy: " ")
-                .map { $0.trimmingCharacters(in: .punctuationCharacters) }
-        }
-        
-        var strings = [String]()
-        strings.append(contentsOf: separateAndCleanse(string: name))
-        strings.append(contentsOf: separateAndCleanse(string: region))
-        strings.append(contentsOf: separateAndCleanse(string: country))
-        
-        return strings
-            .joined(separator: "-")
     }
 }
 
@@ -101,16 +59,12 @@ public extension WeatherLocation {
             name: "San Francisco",
             region: "California",
             country: "United States of America",
-            query: "san-francisco-california-united-states-of-america",
+            query: .standard(),
             coordinate: GeographicCoordinate(
                 latitude: 37.78,
                 longitude: -122.42),
             isFavorite: false,
             isPrimary: true)
-    }
-    
-    static func standardQuery() -> String {
-        standard().query
     }
     
     static func mock() -> WeatherLocation {
