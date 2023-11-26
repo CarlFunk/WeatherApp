@@ -32,6 +32,10 @@ public struct Weather: Equatable {
         self.humidity = humidity
     }
     
+    public var isMock: Bool {
+        self == .mock()
+    }
+    
     public func updated(location: WeatherLocation? = nil) -> Weather {
         Weather(
             location: location ?? self.location,

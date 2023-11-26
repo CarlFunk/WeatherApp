@@ -11,6 +11,12 @@ import Foundation
 public typealias MultiDayForecast = [DayForecast]
 
 public extension MultiDayForecast {
+    var isMock: Bool {
+        self == .mock()
+    }
+}
+
+public extension MultiDayForecast {
     static func mock() -> MultiDayForecast {
         return [
             .mock(date: .mock(addedDays: 0)),

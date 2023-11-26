@@ -32,6 +32,10 @@ public struct DayForecast: Equatable, Identifiable {
         self.weatherCondition = weatherCondition
     }
     
+    public var isMock: Bool {
+        self == .mock()
+    }
+    
     public func dayOfWeekFormatted() -> String {
         date.formatted(.dateTime.weekday(.wide)).capitalized
     }

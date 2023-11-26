@@ -13,7 +13,6 @@ import WeatherDomain
 
 public struct LocationWeatherScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    @Environment(\.isSwiftUIPreview) private var isSwiftUIPreview
     
     @State private var weather: Weather = .mock()
     
@@ -36,7 +35,7 @@ public struct LocationWeatherScreen: View {
         }
         .background(BrandTheme.Color.Background.primary)
         .navigationBarTitleDisplayMode(.inline)
-        .redacted(when: weather == Weather.mock() && !isSwiftUIPreview)
+        .redacted(when: weather.isMock)
         .task(id: location, loadData)
     }
     

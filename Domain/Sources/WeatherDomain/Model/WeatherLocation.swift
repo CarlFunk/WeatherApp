@@ -55,21 +55,21 @@ public struct WeatherLocation: Equatable, Identifiable {
 public extension WeatherLocation {
     static func `default`() -> WeatherLocation {
         WeatherLocation(
-            name: "San Francisco",
-            region: "California",
+            name: "Dallas",
+            region: "Texas",
             country: "United States of America",
-            query: "san-francisco-california-united-states-of-america",
+            query: "dallas-texas-united-states-of-america",
             coordinate: GeographicCoordinate(
-                latitude: 37.78,
-                longitude: -122.42),
+                latitude: 32.78,
+                longitude: -96.8),
             isFavorite: false,
             isPrimary: false)
     }
     
     static func mock(
-        name: String = "Mock",
-        region: String = "Mock",
-        country: String = "Mock",
+        name: String = "Name",
+        region: String = "Region",
+        country: String = "Country",
         coordinate: GeographicCoordinate = .mock(),
         isFavorite: Bool = false,
         isPrimary: Bool = false

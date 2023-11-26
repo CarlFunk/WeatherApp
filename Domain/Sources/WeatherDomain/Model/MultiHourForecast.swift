@@ -11,6 +11,10 @@ import Foundation
 public typealias MultiHourForecast = [HourForecast]
 
 public extension MultiHourForecast {
+    var isMock: Bool {
+        self == .mock()
+    }
+    
     func next24Hours() -> MultiHourForecast {
         self.filter { hourForecast in
             hourForecast.date >= .now && hourForecast.date < .now.addingTimeInterval(86400)

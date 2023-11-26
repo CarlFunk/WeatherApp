@@ -52,7 +52,7 @@ public struct SettingsScreen: View {
             }
         }
         .background(BrandTheme.Color.Background.primary)
-        .redacted(when: settings == .mock())
+        .redacted(when: settings.isMock)
         .navigationBarTitleDisplayMode(.inline)
         .task(loadSettingsGroups)
         .task(loadSettingsData)

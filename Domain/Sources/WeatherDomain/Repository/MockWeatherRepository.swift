@@ -15,11 +15,7 @@ public final class MockWeatherRepository: WeatherRepository {
         _ location: LocationQuery,
         _ airQualityIncluded: Bool
     ) async throws -> Weather = { _, _ in
-        .mock(
-            location: .mock(
-                name: "Dallas",
-                region: "Texas",
-                country: "United States of America"))
+        .mock(location: .default())
     }
     
     public var _getDayForecast: (

@@ -13,10 +13,10 @@ public extension Date {
         var date = Date.now
         var components = Calendar(identifier: .gregorian)
             .dateComponents(in: .current, from: date)
-        components.hour = 0
-        components.minute = 0
-        components.second = 0
-        components.nanosecond = 0
+        components.hour = .zero
+        components.minute = .zero
+        components.second = .zero
+        components.nanosecond = .zero
         
         if let updatedDate = components.date {
             date = updatedDate
@@ -30,10 +30,10 @@ public extension Date {
         var date = Date.now
         var components = Calendar(identifier: .gregorian)
             .dateComponents(in: .current, from: date)
-        components.hour = (components.hour ?? 0) + ((components.minute ?? 0) >= 30 ? 1 : 0)
-        components.minute = 0
-        components.second = 0
-        components.nanosecond = 0
+        components.hour = (components.hour ?? .zero) + ((components.minute ?? .zero) >= 30 ? 1 : 0)
+        components.minute = .zero
+        components.second = .zero
+        components.nanosecond = .zero
         
         if let updatedDate = components.date {
             date = updatedDate

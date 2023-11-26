@@ -16,8 +16,8 @@ public struct LocationCard: View, NavigatableView {
         case viewLocation(WeatherLocation)
     }
     
-    @State private var weather: Weather = .mock()
     @State private var settings: Settings = .mock()
+    @State private var weather: Weather = .mock()
     
     public let location: LocationQuery
     public let navigationRequest: NavigationRequestClosure
@@ -54,7 +54,7 @@ public struct LocationCard: View, NavigatableView {
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .fill(BrandTheme.Color.Background.secondary).shadow(radius: 4))
-        .redacted(when: weather == .mock() && settings == .mock())
+        .redacted(when: weather.isMock && settings.isMock)
         .onTapGesture {
             navigationRequest(.viewLocation(weather.location))
         }

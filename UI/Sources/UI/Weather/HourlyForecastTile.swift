@@ -12,9 +12,9 @@ import WeatherDomain
 import UseCases
 
 public struct HourlyForecastTile: View {
+    @State private var hourForecasts: MultiHourForecast = .mock()
+    @State private var scrollViewHeight: CGFloat = .zero
     @State private var settings: Settings = .mock()
-    @State private var hourForecasts: MultiHourForecast = []
-    @State private var scrollViewHeight: CGFloat = 0
     
     private let location: LocationQuery
     
@@ -39,6 +39,7 @@ public struct HourlyForecastTile: View {
             .padding(.horizontal, BrandTheme.Spacing.standard)
         }
         .frame(height: scrollViewHeight)
+        .redacted(when: hourForecasts.isMock && settings.isMock)
         .task(id: location, loadData)
         .task(loadSettingsData)
     }

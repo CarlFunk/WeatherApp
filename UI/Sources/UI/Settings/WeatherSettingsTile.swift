@@ -36,8 +36,8 @@ public struct WeatherSettingsTile: View, ActionableView {
             divider()
             windSpeedOption()
         }
-        .redacted(when: settings == .mock())
-        .disabled(settings == .mock())
+        .redacted(when: settings.isMock)
+        .disabled(settings.isMock)
         .task(loadSettingsData)
     }
     

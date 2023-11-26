@@ -13,11 +13,26 @@ public typealias WeatherLocationCollection = [WeatherLocation]
 public extension WeatherLocationCollection {
     static func mock() -> [WeatherLocation] {
         [
-            WeatherLocation.mock(name: "Austin", region: "Texas", country: "United States of America"),
-            WeatherLocation.mock(name: "Dallas", region: "Texas", country: "United States of America"),
-            WeatherLocation.mock(name: "Fort Worth", region: "Texas", country: "United States of America"),
-            WeatherLocation.mock(name: "Houston", region: "Texas", country: "United States of America"),
-            WeatherLocation.mock(name: "San Antonio", region: "Texas", country: "United States of America")
+            .mock(
+                name: "Austin",
+                region: "Texas",
+                country: "United States of America"),
+            .mock(
+                name: "Dallas",
+                region: "Texas",
+                country: "United States of America"),
+            .mock(
+                name: "Fort Worth",
+                region: "Texas",
+                country: "United States of America"),
+            .mock(
+                name: "Houston",
+                region: "Texas",
+                country: "United States of America"),
+            .mock(
+                name: "San Antonio",
+                region: "Texas",
+                country: "United States of America")
         ]
     }
 }

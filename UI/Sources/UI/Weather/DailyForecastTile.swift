@@ -46,6 +46,7 @@ public struct DailyForecastTile: View, ActionableView {
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, BrandTheme.Spacing.standard)
+        .redacted(when: dayForecasts.isMock && settings.isMock)
         .task(id: location, loadData)
         .task(loadSettingsData)
     }

@@ -27,6 +27,10 @@ public struct Settings: Equatable, Identifiable {
         self.windSpeedUnit = windSpeedUnit
     }
     
+    public var isMock: Bool {
+        self == .mock()
+    }
+    
     public func updated(properties: [PartialKeyPath<Settings>: Any]) -> Settings {
         Settings(
             pressureUnit: properties[\.pressureUnit] as? PressureUnit ?? pressureUnit,

@@ -49,10 +49,10 @@ public struct LocationQuery: Equatable, ExpressibleByStringLiteral, Hashable, Id
 
 public extension LocationQuery {
     static func `default`() -> LocationQuery {
-        "san-francisco-california-united-states-of-america"
+        "dallas-texas-united-states-of-america"
     }
     
     static func mock() -> LocationQuery {
-        "mock-mock-mock"
+        "name-region-country"
     }
 }

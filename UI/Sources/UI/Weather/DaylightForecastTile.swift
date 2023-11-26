@@ -41,6 +41,7 @@ public struct DaylightForecastTile: View {
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
+        .redacted(when: dayForecast.isMock)
         .task(id: location, loadData)
     }
     
