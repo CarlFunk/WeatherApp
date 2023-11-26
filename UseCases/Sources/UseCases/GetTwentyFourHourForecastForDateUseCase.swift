@@ -15,7 +15,7 @@ public final class GetTwentyFourHourForecastForDateUseCase {
     
     public static func run(location: LocationQuery) async throws -> [HourForecast] {
         try await repository.getHourForecast(
-            for: location.value,
+            for: location,
             days: 2,
             airQualityIncluded: false,
             weatherAlertsIncluded: false)

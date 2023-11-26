@@ -12,7 +12,7 @@ import WeatherData
 public final class MockWeatherRepository: WeatherRepository {
     
     public var _getCurrentWeather: (
-        _ location: String,
+        _ location: LocationQuery,
         _ airQualityIncluded: Bool
     ) async throws -> Weather = { _, _ in
         .mock(
@@ -23,7 +23,7 @@ public final class MockWeatherRepository: WeatherRepository {
     }
     
     public var _getDayForecast: (
-        _ location: String,
+        _ location: LocationQuery,
         _ days: Int,
         _ airQualityIncluded: Bool,
         _ weatherAlertsIncluded: Bool
@@ -32,7 +32,7 @@ public final class MockWeatherRepository: WeatherRepository {
     }
     
     public var _getHourForecast: (
-        _ location: String,
+        _ location: LocationQuery,
         _ days: Int,
         _ airQualityIncluded: Bool,
         _ weatherAlertsIncluded: Bool
@@ -49,14 +49,14 @@ public final class MockWeatherRepository: WeatherRepository {
     public init() { }
     
     public func getCurrentWeather(
-        for location: String,
+        for location: LocationQuery,
         airQualityIncluded: Bool
     ) async throws -> Weather {
         try await _getCurrentWeather(location, airQualityIncluded)
     }
     
     public func getDayForecast(
-        for location: String,
+        for location: LocationQuery,
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool
@@ -65,7 +65,7 @@ public final class MockWeatherRepository: WeatherRepository {
     }
     
     public func getHourForecast(
-        for location: String,
+        for location: LocationQuery,
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool

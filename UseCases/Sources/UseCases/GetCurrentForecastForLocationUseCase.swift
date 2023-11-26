@@ -18,7 +18,7 @@ public final class GetCurrentForecastForLocationUseCase {
     
     public static func run(location: LocationQuery) async throws -> DayForecast {
         guard let dayForecast = try await repository.getDayForecast(
-            for: location.value,
+            for: location,
             days: 1,
             airQualityIncluded: false,
             weatherAlertsIncluded: false)

@@ -10,19 +10,19 @@ import Foundation
 
 public protocol WeatherRepository {
     func getCurrentWeather(
-        for location: String,
+        for location: LocationQuery,
         airQualityIncluded: Bool
     ) async throws -> Weather
     
     func getDayForecast(
-        for location: String,
+        for location: LocationQuery,
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool
     ) async throws -> MultiDayForecast
     
     func getHourForecast(
-        for location: String,
+        for location: LocationQuery,
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool

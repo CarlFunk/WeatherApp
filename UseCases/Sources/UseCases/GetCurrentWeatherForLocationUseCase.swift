@@ -14,7 +14,7 @@ public final class GetCurrentWeatherForLocationUseCase {
     
     public static func run(location: LocationQuery) async throws -> Weather {
         return try await weatherRepository.getCurrentWeather(
-            for: location.value,
+            for: location,
             airQualityIncluded: false)
     }
 }

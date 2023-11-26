@@ -20,10 +20,10 @@ public final class DefaultWeatherRepository: WeatherRepository {
     public init() { }
     
     public func getCurrentWeather(
-        for location: String,
+        for location: LocationQuery,
         airQualityIncluded: Bool
     ) async throws -> Weather {
-        let weatherResponse = try await remoteDataSource.fetchCurrent(for: location, airQualityIncluded: airQualityIncluded)
+        let weatherResponse = try await remoteDataSource.fetchCurrent(for: location.value, airQualityIncluded: airQualityIncluded)
         let favoriteLocationsResponse = try await favoriteLocalDataSource.fetchLocations()
         let homeLocationResponse = try await settingsLocalDataSource.fetchHomeLocation()
         
@@ -34,22 +34,22 @@ public final class DefaultWeatherRepository: WeatherRepository {
     }
     
     public func getDayForecast(
-        for location: String,
+        for location: LocationQuery,
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool
     ) async throws -> MultiDayForecast {
-        let responseModel = try await remoteDataSource.fetchForecast(for: location, days: days, airQualityIncluded: airQualityIncluded, weatherAlertsIncluded: weatherAlertsIncluded)
+        let responseModel = try await remoteDataSource.fetchForecast(for: location.value, days: days, airQualityIncluded: airQualityIncluded, weatherAlertsIncluded: weatherAlertsIncluded)
         return responseModel.forecast.forecastDays.map { DayForecast(from: $0) }
     }
     
     public func getHourForecast(
-        for location: String,
+        for location: LocationQuery,
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool
     ) async throws -> MultiHourForecast {
-        let responseModel = try await remoteDataSource.fetchForecast(for: location, days: days, airQualityIncluded: airQualityIncluded, weatherAlertsIncluded: weatherAlertsIncluded)
+        let responseModel = try await remoteDataSource.fetchForecast(for: location.value, days: days, airQualityIncluded: airQualityIncluded, weatherAlertsIncluded: weatherAlertsIncluded)
         
         return responseModel.forecast.forecastDays
             .flatMap { dayResponseModel in
