@@ -19,3 +19,11 @@ public struct Humidity: Equatable {
         return value.formatted(.percent)
     }
 }
+
+public extension Humidity {
+    static func mock(
+        value: Int = 71
+    ) -> Humidity {
+        Humidity(value: value)
+    }
+}

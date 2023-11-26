@@ -19,11 +19,6 @@ public final class ToggleFavoriteLocationUseCase {
         return weather.updated(location: newLocation)
     }
     
-    public static func run(searchLocation: SearchLocation) async throws -> SearchLocation {
-        let newLocation = try await run(weatherLocation: searchLocation.location)
-        return searchLocation.updated(location: newLocation)
-    }
-    
     public static func run(weatherLocation: WeatherLocation) async throws -> WeatherLocation {
         let newIsFavorite = !weatherLocation.isFavorite
         if newIsFavorite {

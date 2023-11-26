@@ -15,11 +15,11 @@ public struct LocationSearchResultRow: View, NavigatableView {
         case viewLocation(WeatherLocation)
     }
     
-    @Binding public var result: SearchLocation
+    @Binding public var result: WeatherLocation
     public let navigationRequest: NavigationRequestClosure
     
     public init(
-        result: Binding<SearchLocation>,
+        result: Binding<WeatherLocation>,
         navigationRequest: @escaping NavigationRequestClosure
     ) {
         self._result = result
@@ -40,21 +40,21 @@ public struct LocationSearchResultRow: View, NavigatableView {
     
     private func locationSection() -> some View {
         Button {
-            navigationRequest(.viewLocation(result.location))
+            navigationRequest(.viewLocation(result))
         } label: {
             VStack(
                 alignment: .leading,
                 spacing: BrandTheme.Spacing.none
             ) {
-                Text(result.location.name)
+                Text(result.name)
                     .font(.brand(style: .medium, size: 14))
                     .foregroundColor(BrandTheme.Color.Text.primary)
                 
-                Text(result.location.region)
+                Text(result.region)
                     .font(.brand(style: .regular, size: 12))
                     .foregroundColor(BrandTheme.Color.Text.primary)
                 
-                Text(result.location.country)
+                Text(result.country)
                     .font(.brand(style: .regular, size: 12))
                     .foregroundColor(BrandTheme.Color.Text.secondary)
             }
@@ -66,12 +66,12 @@ public struct LocationSearchResultRow: View, NavigatableView {
     private func actionSection() -> some View {
         Button {
             Task {
-                result = try await ToggleFavoriteLocationUseCase.run(searchLocation: result)
+                result = try await ToggleFavoriteLocationUseCase.run(weatherLocation: result)
             }
         } label: {
             Image(.system(.favorite))
                 .font(.body)
-                .symbolVariant(result.location.isFavorite ? .fill : .none)
+                .symbolVariant(result.isFavorite ? .fill : .none)
         }
         .buttonStyle(.plain)
     }

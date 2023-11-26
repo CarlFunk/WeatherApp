@@ -44,9 +44,9 @@ public extension Settings {
             windSpeedUnit: .milesPerHour)
     }
     
-    static func mock() -> Settings {
+    static func mock(id: String = "Mock") -> Settings {
         Settings(
-            id: "Mock",
+            id: id,
             pressureUnit: .mock(),
             temperatureUnit: .mock(),
             windSpeedUnit: .mock())

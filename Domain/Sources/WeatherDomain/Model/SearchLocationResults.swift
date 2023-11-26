@@ -8,16 +8,4 @@
 
 import Foundation
 
-public typealias SearchLocationResults = [SearchLocation]
-
-public extension SearchLocationResults {
-    static func mock() -> [SearchLocation] {
-        [
-            SearchLocation.mock(name: "Austin"),
-            SearchLocation.mock(name: "Dallas"),
-            SearchLocation.mock(name: "Fort Worth"),
-            SearchLocation.mock(name: "Houston"),
-            SearchLocation.mock(name: "San Antonio")
-        ]
-    }
-}
+public typealias SearchLocationResults = [WeatherLocation]

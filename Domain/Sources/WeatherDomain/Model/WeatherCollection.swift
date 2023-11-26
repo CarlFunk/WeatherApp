@@ -12,12 +12,9 @@ public typealias WeatherCollection = [Weather]
 
 public extension WeatherCollection {
     static func mock() -> WeatherCollection {
-        [
-            Weather.mock(name: "Austin"),
-            Weather.mock(name: "Dallas"),
-            Weather.mock(name: "Fort Worth"),
-            Weather.mock(name: "Houston"),
-            Weather.mock(name: "San Antonio")
-        ]
+        let locations = WeatherLocationCollection.mock()
+        return locations.map { location in
+            Weather.mock(location: location)
+        }
     }
 }

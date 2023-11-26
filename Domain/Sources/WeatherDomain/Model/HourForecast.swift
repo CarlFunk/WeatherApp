@@ -8,13 +8,13 @@
 
 import Foundation
 
-public struct HourForecast {
-    public let date: String
+public struct HourForecast: Equatable, Identifiable {
+    public let date: Date
     public let temperature: Temperature
     public let weatherCondition: WeatherCondition
     
     public init(
-        date: String,
+        date: Date,
         temperature: Temperature,
         weatherCondition: WeatherCondition
     ) {
@@ -23,27 +23,24 @@ public struct HourForecast {
         self.weatherCondition = weatherCondition
     }
     
-    public func timeFormatted(includeMinutes: Bool) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        guard let date = dateFormatter.date(from: self.date) else {
-            return ""
-        }
-        
-        dateFormatter.dateFormat = includeMinutes ? "h:mm a" : "h a"
-        return dateFormatter.string(from: date)
+    public func hourFormatted() -> String {
+        date.formatted(.dateTime.hour(.defaultDigits(amPM: .abbreviated)))
+    }
+    
+    public var id: String {
+        date.formatted(.iso8601)
     }
 }
 
 public extension HourForecast {
-    static func mock() -> HourForecast {
+    static func mock(
+        date: Date = .mock(addedHours: 0),
+        temperature: Temperature = .mock(),
+        weatherCondition: WeatherCondition = .mock()
+    ) -> HourForecast {
         HourForecast(
-            date: "2022-11-21 00:00",
-            temperature: Temperature(
-                celcius: 6.9,
-                fahrenheit: 44.4),
-            weatherCondition: WeatherCondition(
-                kind: .partlyCloudy,
-                text: "Partly cloudy"))
+            date: date,
+            temperature: temperature,
+            weatherCondition: weatherCondition)
     }
 }

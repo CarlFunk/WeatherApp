@@ -48,7 +48,7 @@ public final class DefaultWeatherRepository: WeatherRepository {
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool
-    ) async throws -> [HourForecast] {
+    ) async throws -> MultiHourForecast {
         let responseModel = try await remoteDataSource.fetchForecast(for: location, days: days, airQualityIncluded: airQualityIncluded, weatherAlertsIncluded: weatherAlertsIncluded)
         
         return responseModel.forecast.forecastDays

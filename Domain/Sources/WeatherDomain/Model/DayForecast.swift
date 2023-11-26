@@ -8,9 +8,8 @@
 
 import Foundation
 
-public struct DayForecast {
-    public let id: String
-    public let date: String
+public struct DayForecast: Equatable, Identifiable {
+    public let date: Date
     public let highTemperature: Temperature
     public let lowTemperature: Temperature
     public let sunriseTime: String
@@ -18,15 +17,13 @@ public struct DayForecast {
     public let weatherCondition: WeatherCondition
     
     public init(
-        id: String,
-        date: String,
+        date: Date,
         highTemperature: Temperature,
         lowTemperature: Temperature,
         sunriseTime: String,
         sunsetTime: String,
         weatherCondition: WeatherCondition
     ) {
-        self.id = id
         self.date = date
         self.highTemperature = highTemperature
         self.lowTemperature = lowTemperature
@@ -35,33 +32,30 @@ public struct DayForecast {
         self.weatherCondition = weatherCondition
     }
     
-    public func dayOfWeekFormatted() -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        guard let date = dateFormatter.date(from: self.date) else {
-            return nil
-        }
-
-        dateFormatter.dateFormat = "EEEE"
-        return dateFormatter.string(from: date).capitalized
+    public func dayOfWeekFormatted() -> String {
+        date.formatted(.dateTime.weekday(.wide)).capitalized
+    }
+    
+    public var id: String {
+        date.formatted(.iso8601)
     }
 }
 
 public extension DayForecast {
-    static func mock(date: String = "2022-11-21") -> DayForecast {
+    static func mock(
+        date: Date = .mock(addedDays: 0),
+        highTemperature: Temperature = .mock(),
+        lowTemperature: Temperature = .mock(),
+        sunriseTime: String = "07:04 AM",
+        sunsetTime: String = "05:24 PM",
+        weatherCondition: WeatherCondition = .mock()
+    ) -> DayForecast {
         DayForecast(
-            id: "Mock",
             date: date,
-            highTemperature: Temperature(
-                celcius: 12.1,
-                fahrenheit: 53.8),
-            lowTemperature: Temperature(
-                celcius: 5.5,
-                fahrenheit: 41.9),
-            sunriseTime: "07:04 AM",
-            sunsetTime: "05:24 PM",
-            weatherCondition: WeatherCondition(
-                kind: .partlyCloudy,
-                text: "Partly cloudy"))
+            highTemperature: highTemperature,
+            lowTemperature: lowTemperature,
+            sunriseTime: sunriseTime,
+            sunsetTime: sunsetTime,
+            weatherCondition: weatherCondition)
     }
 }

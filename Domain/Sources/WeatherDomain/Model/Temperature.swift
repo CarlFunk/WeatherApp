@@ -72,7 +72,7 @@ public extension Temperature {
 }
 
 public extension Temperature {
-    static func mock(random: Bool = true) -> Temperature {
+    static func mock() -> Temperature {
         Temperature(
             celcius: 8.3,
             fahrenheit: 46.9)

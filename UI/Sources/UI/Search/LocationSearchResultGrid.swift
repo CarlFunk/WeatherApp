@@ -19,7 +19,7 @@ public struct LocationSearchResultGrid: View, NavigatableView {
     public let navigationRequest: NavigationRequestClosure
     
     public init(
-        results: Binding<[SearchLocation]>,
+        results: Binding<[WeatherLocation]>,
         navigationRequest: @escaping NavigationRequestClosure
     ) {
         self._results = results
@@ -35,7 +35,7 @@ public struct LocationSearchResultGrid: View, NavigatableView {
                 alignment: .leading,
                 spacing: BrandTheme.Spacing.medium
             ) {
-                ForEach($results, id:\.id) { result in
+                ForEach($results) { result in
                     LocationSearchResultRow(result: result) { viewNavigationRequest in
                         switch viewNavigationRequest {
                         case .viewLocation(let location):

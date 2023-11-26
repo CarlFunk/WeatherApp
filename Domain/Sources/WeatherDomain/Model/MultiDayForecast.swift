@@ -13,9 +13,13 @@ public typealias MultiDayForecast = [DayForecast]
 public extension MultiDayForecast {
     static func mock() -> MultiDayForecast {
         return [
-            DayForecast.mock(date: "2022-01-01"),
-            DayForecast.mock(date: "2022-01-02"),
-            DayForecast.mock(date: "2022-01-03")
+            .mock(date: .mock(addedDays: 0)),
+            .mock(date: .mock(addedDays: 1)),
+            .mock(date: .mock(addedDays: 2)),
+            .mock(date: .mock(addedDays: 3)),
+            .mock(date: .mock(addedDays: 4)),
+            .mock(date: .mock(addedDays: 5)),
+            .mock(date: .mock(addedDays: 6))
         ]
     }
 }

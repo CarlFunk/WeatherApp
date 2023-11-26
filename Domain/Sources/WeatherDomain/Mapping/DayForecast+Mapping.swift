@@ -11,8 +11,7 @@ import WeatherData
 
 extension DayForecast {
     init(from response: ForecastDayInnerResponseModel) {
-        self.id = response.date
-        self.date = response.date
+        self.date = Self.parseDate(from: response.date)
         self.highTemperature = Temperature(
             celcius: response.day.maxTemperatureCelcius,
             fahrenheit: response.day.maxTemperatureFahrenheit)
@@ -23,5 +22,12 @@ extension DayForecast {
             fahrenheit: response.day.minTemperatureFahrenheit)
         self.weatherCondition = WeatherCondition(
             from: response.day.condition)
+    }
+    
+    private static func parseDate(from string: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = .current
+        return dateFormatter.date(from: string) ?? .now
     }
 }

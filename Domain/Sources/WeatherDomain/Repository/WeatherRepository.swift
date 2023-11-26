@@ -26,7 +26,7 @@ public protocol WeatherRepository {
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool
-    ) async throws -> [HourForecast]
+    ) async throws -> MultiHourForecast
     
     func getLocations(
         for search: String

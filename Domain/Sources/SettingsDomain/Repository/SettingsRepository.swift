@@ -18,5 +18,5 @@ public protocol SettingsRepository {
     func getHomeLocation() async throws -> String
     
     func setSettings(_ settings: Settings) async throws
-    func setHomeLocation(_ location: String) async throws
+    func setHomeLocation(_ location: WeatherLocation) async throws
 }

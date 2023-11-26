@@ -18,7 +18,7 @@ extension SearchLocationResults {
     ) {
         self = searchWeatherResponse
             .map { locationResponseModel in
-                SearchLocation(
+                WeatherLocation(
                     from: locationResponseModel,
                     isFavorite: favoriteLocationsResponse.contains(locationResponseModel.query),
                     isPrimary: homeLocationResponse == locationResponseModel.query)

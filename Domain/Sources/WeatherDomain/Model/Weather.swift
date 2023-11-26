@@ -44,38 +44,20 @@ public struct Weather: Equatable {
 }
 
 public extension Weather {
-    static func mock(name: String = "Dallas") -> Weather {
-        let region = "Texas"
-        let country = "United States of America"
-        
+    static func mock(
+        location: WeatherLocation = .mock(),
+        condition: WeatherCondition = .mock(),
+        temperature: Temperature = .mock(),
+        windSpeed: WindSpeed = .mock(),
+        pressure: Pressure = .mock(),
+        humidity: Humidity = .mock()
+    ) -> Weather {
         return Weather(
-            location: WeatherLocation(
-                id: "Mock",
-                name: name,
-                region: region,
-                country: country,
-                query: LocationQuery.generate(
-                    name: name,
-                    region: region,
-                    country: country),
-                coordinate: GeographicCoordinate(
-                    latitude: 32.78,
-                    longitude: -96.8),
-                isFavorite: false,
-                isPrimary: false),
-            condition: WeatherCondition(
-                kind: .partlyCloudy,
-                text: "Partly cloudy"),
-            temperature: Temperature(
-                celcius: 8.3,
-                fahrenheit: 46.9),
-            windSpeed: WindSpeed(
-                kilometersPerHour: 9.0,
-                milesPerHour: 5.6),
-            pressure: Pressure(
-                inch: 30.36,
-                millibar: 1028.0),
-            humidity: Humidity(
-                value: 71))
+            location: location,
+            condition: condition,
+            temperature: temperature,
+            windSpeed: windSpeed,
+            pressure: pressure,
+            humidity: humidity)
     }
 }

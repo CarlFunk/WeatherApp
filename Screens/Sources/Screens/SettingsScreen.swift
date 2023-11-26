@@ -24,8 +24,6 @@ public struct SettingsScreen: View {
         }
     }
     
-    @Environment(\.isSwiftUIPreview) private var isSwiftUIPreview
-    
     @State private var pressureSelectionGroup = SelectionGroup<PressureUnit>()
     @State private var temperatureSelectionGroup = SelectionGroup<TemperatureUnit>()
     @State private var windSpeedSelectionGroup = SelectionGroup<WindSpeedUnit>()
@@ -54,7 +52,7 @@ public struct SettingsScreen: View {
             }
         }
         .background(BrandTheme.Color.Background.primary)
-        .redacted(when: settings == .mock() && !isSwiftUIPreview)
+        .redacted(when: settings == .mock())
         .navigationBarTitleDisplayMode(.inline)
         .task(loadSettingsGroups)
         .task(loadSettingsData)

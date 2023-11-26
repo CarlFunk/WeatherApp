@@ -107,10 +107,10 @@ public final class DefaultSettingsRepository: SettingsRepository {
         }
     }
     
-    public func setHomeLocation(_ location: String) async throws {
-        try await localDataSource.updateHomeLocation(location)
+    public func setHomeLocation(_ location: WeatherLocation) async throws {
+        try await localDataSource.updateHomeLocation(location.query.value)
         await MainActor.run {
-            DefaultSettingsRepository.homeLocationPublisher.send(location)
+            DefaultSettingsRepository.homeLocationPublisher.send(location.query.value)
         }
     }
 }

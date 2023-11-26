@@ -9,8 +9,7 @@
 import CoreLocation
 import Foundation
 
-public struct WeatherLocation: Equatable {
-    public let id: String
+public struct WeatherLocation: Equatable, Identifiable {
     public let name: String
     public let region: String
     public let country: String
@@ -20,7 +19,6 @@ public struct WeatherLocation: Equatable {
     public let isPrimary: Bool
     
     public init(
-        id: String,
         name: String,
         region: String,
         country: String,
@@ -29,7 +27,6 @@ public struct WeatherLocation: Equatable {
         isFavorite: Bool,
         isPrimary: Bool
     ) {
-        self.id = id
         self.name = name
         self.region = region
         self.country = country
@@ -39,9 +36,12 @@ public struct WeatherLocation: Equatable {
         self.isPrimary = isPrimary
     }
     
+    public var id: String {
+        query.value
+    }
+    
     public func updated(isFavorite: Bool? = nil, isPrimary: Bool? = nil) -> WeatherLocation {
         WeatherLocation(
-            id: id,
             name: name,
             region: region,
             country: country,
@@ -53,31 +53,37 @@ public struct WeatherLocation: Equatable {
 }
 
 public extension WeatherLocation {
-    static func standard() -> WeatherLocation {
+    static func `default`() -> WeatherLocation {
         WeatherLocation(
-            id: "San Francisco",
             name: "San Francisco",
             region: "California",
             country: "United States of America",
-            query: .standard(),
+            query: "san-francisco-california-united-states-of-america",
             coordinate: GeographicCoordinate(
                 latitude: 37.78,
                 longitude: -122.42),
             isFavorite: false,
-            isPrimary: true)
+            isPrimary: false)
     }
     
-    static func mock() -> WeatherLocation {
+    static func mock(
+        name: String = "Name",
+        region: String = "Region",
+        country: String = "Country",
+        coordinate: GeographicCoordinate = .mock(),
+        isFavorite: Bool = false,
+        isPrimary: Bool = false
+    ) -> WeatherLocation {
         WeatherLocation(
-            id: "Mock",
-            name: "Dallas",
-            region: "Texas",
-            country: "United States of America",
-            query: "dallas-texas-united-states-of-america",
-            coordinate: GeographicCoordinate(
-                latitude: 32.78,
-                longitude: -96.8),
-            isFavorite: false,
-            isPrimary: false)
+            name: name,
+            region: region,
+            country: country,
+            query: LocationQuery.generate(
+                name: name,
+                region: region,
+                country: country),
+            coordinate: coordinate,
+            isFavorite: isFavorite,
+            isPrimary: isPrimary)
     }
 }

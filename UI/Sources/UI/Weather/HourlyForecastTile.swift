@@ -13,7 +13,7 @@ import UseCases
 
 public struct HourlyForecastTile: View {
     @State private var settings: Settings = .mock()
-    @State private var hourForecasts: [HourForecast] = []
+    @State private var hourForecasts: MultiHourForecast = []
     @State private var scrollViewHeight: CGFloat = 0
     
     private let location: String
@@ -32,7 +32,7 @@ public struct HourlyForecastTile: View {
                 ],
                 spacing: BrandTheme.Spacing.standard
             ) {
-                ForEach(hourForecasts, id: \.date) { model in
+                ForEach(hourForecasts.next24Hours()) { model in
                     forecastColumn(model: model)
                 }
             }
@@ -46,7 +46,7 @@ public struct HourlyForecastTile: View {
     @ViewBuilder
     private func forecastColumn(model: HourForecast) -> some View {
         VStack(spacing: BrandTheme.Spacing.medium) {
-            Text(model.timeFormatted(includeMinutes: false))
+            Text(model.hourFormatted())
                 .font(.brand(style: .medium, size: 12))
                 .foregroundColor(BrandTheme.Color.Text.primary)
             

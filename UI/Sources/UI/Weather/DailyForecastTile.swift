@@ -52,7 +52,7 @@ public struct DailyForecastTile: View, ActionableView {
     
     @ViewBuilder
     private func forecastRow(model: DayForecast) -> some View {
-        Text(model.dayOfWeekFormatted() ?? "")
+        Text(model.dayOfWeekFormatted())
             .font(.brand(style: .regular, size: 14))
             .foregroundColor(BrandTheme.Color.Text.primary)
         

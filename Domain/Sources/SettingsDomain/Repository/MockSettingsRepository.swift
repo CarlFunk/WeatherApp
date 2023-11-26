@@ -14,7 +14,7 @@ public final class MockSettingsRepository: SettingsRepository {
     private let homeLocationPublisher: CurrentValueSubject<String, Never>
     
     public init(
-        settings: Settings = .mock(),
+        settings: Settings = .mock(id: "1"),
         homeLocation: String = LocationQuery.standardValue()
     ) {
         self.settingsPublisher = .init(settings)
@@ -43,7 +43,7 @@ public final class MockSettingsRepository: SettingsRepository {
         settingsPublisher.send(settings)
     }
     
-    public func setHomeLocation(_ location: String) async throws {
-        homeLocationPublisher.send(location)
+    public func setHomeLocation(_ location: WeatherLocation) async throws {
+        homeLocationPublisher.send(location.query.value)
     }
 }

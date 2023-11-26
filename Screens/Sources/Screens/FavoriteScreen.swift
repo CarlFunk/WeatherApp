@@ -23,7 +23,7 @@ public struct FavoriteScreen: View, NavigatableView {
     
     @State private var searchText: String = ""
     @State private var favoriteLocations: [String] = []
-    @State private var searchResults: [SearchLocation] = []
+    @State private var searchResults: SearchLocationResults = []
     
     public let navigationRequest: NavigationRequestClosure
     

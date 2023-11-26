@@ -11,13 +11,48 @@ import WeatherData
 
 public final class MockWeatherRepository: WeatherRepository {
     
+    public var _getCurrentWeather: (
+        _ location: String,
+        _ airQualityIncluded: Bool
+    ) async throws -> Weather = { _, _ in
+        .mock(
+            location: .mock(
+                name: "Dallas",
+                region: "Texas",
+                country: "United States of America"))
+    }
+    
+    public var _getDayForecast: (
+        _ location: String,
+        _ days: Int,
+        _ airQualityIncluded: Bool,
+        _ weatherAlertsIncluded: Bool
+    ) async throws -> MultiDayForecast = { _, _, _, _ in
+        .mock()
+    }
+    
+    public var _getHourForecast: (
+        _ location: String,
+        _ days: Int,
+        _ airQualityIncluded: Bool,
+        _ weatherAlertsIncluded: Bool
+    ) async throws -> MultiHourForecast = { _, _, _, _ in
+        .mock()
+    }
+    
+    public var _getLocations: (
+        _ search: String
+    ) async throws -> SearchLocationResults = { _ in
+        .mock()
+    }
+    
     public init() { }
     
     public func getCurrentWeather(
         for location: String,
         airQualityIncluded: Bool
     ) async throws -> Weather {
-        return Weather.mock()
+        try await _getCurrentWeather(location, airQualityIncluded)
     }
     
     public func getDayForecast(
@@ -26,7 +61,7 @@ public final class MockWeatherRepository: WeatherRepository {
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool
     ) async throws -> MultiDayForecast {
-        return .mock()
+        try await _getDayForecast(location, days, airQualityIncluded, weatherAlertsIncluded)
     }
     
     public func getHourForecast(
@@ -34,17 +69,13 @@ public final class MockWeatherRepository: WeatherRepository {
         days: Int,
         airQualityIncluded: Bool,
         weatherAlertsIncluded: Bool
-    ) async throws -> [HourForecast] {
-        return [
-            HourForecast.mock()
-        ]
+    ) async throws -> MultiHourForecast {
+        try await _getHourForecast(location, days, airQualityIncluded, weatherAlertsIncluded)
     }
     
     public func getLocations(
         for search: String
     ) async throws -> SearchLocationResults {
-        return [
-            SearchLocation.mock()
-        ]
+        try await _getLocations(search)
     }
 }

@@ -33,9 +33,12 @@ public struct GeographicCoordinate: Equatable {
 }
 
 public extension GeographicCoordinate {
-    static func mock() -> GeographicCoordinate {
+    static func mock(
+        latitude: Double = 32.78,
+        longitude: Double = -96.8
+    ) -> GeographicCoordinate {
         GeographicCoordinate(
-            latitude: 32.78,
-            longitude: -96.8)
+            latitude: latitude,
+            longitude: longitude)
     }
 }

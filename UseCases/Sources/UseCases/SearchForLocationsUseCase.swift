@@ -12,7 +12,7 @@ import WeatherDomain
 public final class SearchForLocationsUseCase {
     @Dependency(WeatherRepository.self) private static var weatherRepository
     
-    public static func run(search: String) async throws -> [SearchLocation] {
+    public static func run(search: String) async throws -> SearchLocationResults {
         if search.isEmpty { return [] }
         return try await weatherRepository.getLocations(for: search)
     }
