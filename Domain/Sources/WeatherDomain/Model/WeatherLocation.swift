@@ -67,9 +67,9 @@ public extension WeatherLocation {
     }
     
     static func mock(
-        name: String = "Name",
-        region: String = "Region",
-        country: String = "Country",
+        name: String = "Mock",
+        region: String = "Mock",
+        country: String = "Mock",
         coordinate: GeographicCoordinate = .mock(),
         isFavorite: Bool = false,
         isPrimary: Bool = false

@@ -17,10 +17,10 @@ public struct DaylightForecastTile: View {
     private let lineWidth: CGFloat = 2
     private let lineGradientOpacity: CGFloat = 0.4
     
-    private let location: String
+    private let location: LocationQuery
     
     public init(
-        location: String
+        location: LocationQuery
     ) {
         self.location = location
     }
@@ -114,7 +114,7 @@ public struct DaylightForecastTile: View {
 struct DaylightForecastTile_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            DaylightForecastTile(location: LocationQuery.standardValue())
+            DaylightForecastTile(location: .mock())
                 .background(BrandTheme.Color.Background.primary)
                 .previewLayout(.sizeThatFits)
         }

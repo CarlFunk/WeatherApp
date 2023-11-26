@@ -17,10 +17,10 @@ public struct LocationWeatherScreen: View {
     
     @State private var weather: Weather = .mock()
     
-    private let location: String
+    private let location: LocationQuery
     
     public init(
-        location: String
+        location: LocationQuery
     ) {
         self.location = location
     }
@@ -175,7 +175,7 @@ public struct LocationWeatherScreen: View {
 struct LocationWeatherScreen_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            LocationWeatherScreen(location: LocationQuery.standardValue())
+            LocationWeatherScreen(location: .mock())
         }
     }
 }

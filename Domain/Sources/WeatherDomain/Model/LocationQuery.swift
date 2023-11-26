@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct LocationQuery: Equatable, ExpressibleByStringLiteral {
+public struct LocationQuery: Equatable, ExpressibleByStringLiteral, Hashable, Identifiable {
     public let value: String
     
     public init(value: String) {
@@ -17,6 +17,10 @@ public struct LocationQuery: Equatable, ExpressibleByStringLiteral {
     
     public init(stringLiteral value: String) {
         self.value = value
+    }
+    
+    public var id: String {
+        value
     }
     
     public static func generate(
@@ -44,11 +48,11 @@ public struct LocationQuery: Equatable, ExpressibleByStringLiteral {
 }
 
 public extension LocationQuery {
-    static func standard() -> LocationQuery {
+    static func `default`() -> LocationQuery {
         "san-francisco-california-united-states-of-america"
     }
     
-    static func standardValue() -> String {
-        standard().value
+    static func mock() -> LocationQuery {
+        "mock-mock-mock"
     }
 }

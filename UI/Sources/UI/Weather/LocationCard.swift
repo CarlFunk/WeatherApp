@@ -19,11 +19,11 @@ public struct LocationCard: View, NavigatableView {
     @State private var weather: Weather = .mock()
     @State private var settings: Settings = .mock()
     
-    public let location: String
+    public let location: LocationQuery
     public let navigationRequest: NavigationRequestClosure
     
     public init(
-        location: String,
+        location: LocationQuery,
         navigationRequest: @escaping NavigationRequestClosure
     ) {
         self.location = location
@@ -161,7 +161,7 @@ struct FavoriteLocationView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
             LocationCard(
-                location: LocationQuery.standardValue(),
+                location: .mock(),
                 navigationRequest: { _ in })
             .background(BrandTheme.Color.Background.primary)
             .previewLayout(.sizeThatFits)

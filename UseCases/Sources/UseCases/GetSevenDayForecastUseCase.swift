@@ -13,9 +13,9 @@ import WeatherDomain
 public final class GetSevenDayForecastUseCase {
     @Dependency(WeatherRepository.self) private static var repository
     
-    public static func run(location: String) async throws -> MultiDayForecast {
+    public static func run(location: LocationQuery) async throws -> MultiDayForecast {
         try await repository.getDayForecast(
-            for: location,
+            for: location.value,
             days: 7,
             airQualityIncluded: false,
             weatherAlertsIncluded: false)

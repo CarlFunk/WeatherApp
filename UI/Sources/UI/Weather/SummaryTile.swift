@@ -15,10 +15,10 @@ public struct SummaryTile: View {
     @State private var settings: Settings = .mock()
     @State private var weather: Weather = .mock()
     
-    private let location: String
+    private let location: LocationQuery
     
     public init(
-        location: String
+        location: LocationQuery
     ) {
         self.location = location
     }
@@ -122,7 +122,7 @@ public struct SummaryTile: View {
 struct SummaryTile_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            SummaryTile(location: LocationQuery.standardValue())
+            SummaryTile(location: .mock())
                 .background(BrandTheme.Color.Background.primary)
                 .previewLayout(.sizeThatFits)
         }

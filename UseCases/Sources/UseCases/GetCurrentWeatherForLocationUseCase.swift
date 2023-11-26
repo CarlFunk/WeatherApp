@@ -12,9 +12,9 @@ import WeatherDomain
 public final class GetCurrentWeatherForLocationUseCase {
     @Dependency(WeatherRepository.self) private static var weatherRepository
     
-    public static func run(location: String) async throws -> Weather {
+    public static func run(location: LocationQuery) async throws -> Weather {
         return try await weatherRepository.getCurrentWeather(
-            for: location,
+            for: location.value,
             airQualityIncluded: false)
     }
 }

@@ -15,14 +15,14 @@ import WeatherDomain
 public struct FavoriteScreen: View, NavigatableView {
     
     public enum NavigationRequest {
-        case viewLocation(id: String)
+        case viewLocation(query: LocationQuery)
     }
     
     @FocusState private var focusSearch: Bool
     @State private var showSearch: Bool = false
     
     @State private var searchText: String = ""
-    @State private var favoriteLocations: [String] = []
+    @State private var favoriteLocations: LocationQueryCollection = []
     @State private var searchResults: SearchLocationResults = []
     
     public let navigationRequest: NavigationRequestClosure
@@ -101,7 +101,7 @@ public struct FavoriteScreen: View, NavigatableView {
         LocationSearchResultGrid(results: $searchResults) { viewNavigationRequest in
             switch viewNavigationRequest {
             case .viewLocation(let location):
-                navigationRequest(.viewLocation(id: location.query.value))
+                navigationRequest(.viewLocation(query: location.query))
             }
         }
     }
@@ -111,7 +111,7 @@ public struct FavoriteScreen: View, NavigatableView {
         LocationGrid(locations: favoriteLocations) { viewNavigationRequest in
             switch viewNavigationRequest {
             case .viewLocation(let location):
-                navigationRequest(.viewLocation(id: location.query.value))
+                navigationRequest(.viewLocation(query: location.query))
             }
         }
     }

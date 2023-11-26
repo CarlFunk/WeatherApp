@@ -16,9 +16,9 @@ public final class GetCurrentForecastForLocationUseCase {
     
     @Dependency(WeatherRepository.self) private static var repository
     
-    public static func run(location: String) async throws -> DayForecast {
+    public static func run(location: LocationQuery) async throws -> DayForecast {
         guard let dayForecast = try await repository.getDayForecast(
-            for: location,
+            for: location.value,
             days: 1,
             airQualityIncluded: false,
             weatherAlertsIncluded: false)

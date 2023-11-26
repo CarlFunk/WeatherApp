@@ -15,15 +15,15 @@ import WeatherDomain
 public final class DefaultFavoriteRepository: FavoriteRepository {
     @Dependency(FavoriteLocalDataSource.self) private var localDataSource
     
-    private static let locationsPublisher = CurrentValueSubject<[String], Never>([])
+    private static let locationsPublisher = CurrentValueSubject<LocationQueryCollection, Never>([])
     
     public init() { }
     
-    public func getLocationsSubscription() -> AnyPublisher<[String], Never> {
+    public func getLocationsSubscription() -> AnyPublisher<LocationQueryCollection, Never> {
         if DefaultFavoriteRepository.locationsPublisher.value.isEmpty {
-            return Future<[String], Never> { promise in
+            return Future<LocationQueryCollection, Never> { promise in
                 Task {
-                    let locations: [String]
+                    let locations: LocationQueryCollection
                     do {
                         locations = try await self.getLocations()
                     } catch {
@@ -45,8 +45,9 @@ public final class DefaultFavoriteRepository: FavoriteRepository {
         }
     }
     
-    public func getLocations() async throws -> [String] {
+    public func getLocations() async throws -> LocationQueryCollection {
         try await localDataSource.fetchLocations()
+            .map { LocationQuery(value: $0) }
     }
     
     public func addLocation(_ location: WeatherLocation) async throws {

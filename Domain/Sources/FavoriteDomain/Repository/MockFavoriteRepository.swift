@@ -11,32 +11,32 @@ import Foundation
 import WeatherDomain
 
 public final class MockFavoriteRepository: FavoriteRepository {
-    private let locationsPublisher: CurrentValueSubject<[String], Never>
+    private let locationsPublisher: CurrentValueSubject<LocationQueryCollection, Never>
     
-    public init(locations: [String] = []) {
+    public init(locations: LocationQueryCollection = .mock()) {
         locationsPublisher = .init(locations)
     }
     
-    public func getLocationsSubscription() -> AnyPublisher<[String], Never> {
+    public func getLocationsSubscription() -> AnyPublisher<LocationQueryCollection, Never> {
         locationsPublisher
             .eraseToAnyPublisher()
     }
     
-    public func getLocations() async throws -> [String] {
+    public func getLocations() async throws -> LocationQueryCollection {
         locationsPublisher.value
     }
     
     public func addLocation(_ location: WeatherLocation) async throws {
         var locations = locationsPublisher.value
-        if !locations.contains(location.query.value) {
-            locations.append(location.query.value)
+        if !locations.contains(location.query) {
+            locations.append(location.query)
         }
         locationsPublisher.send(locations)
     }
     
     public func removeLocation(_ location: WeatherLocation) async throws {
         var locations = locationsPublisher.value
-        locations.removeAll(where: { $0 == location.query.value })
+        locations.removeAll(where: { $0 == location.query })
         locationsPublisher.send(locations)
     }
     

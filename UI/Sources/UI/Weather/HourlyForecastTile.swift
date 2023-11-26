@@ -16,10 +16,10 @@ public struct HourlyForecastTile: View {
     @State private var hourForecasts: MultiHourForecast = []
     @State private var scrollViewHeight: CGFloat = 0
     
-    private let location: String
+    private let location: LocationQuery
     
     public init(
-        location: String
+        location: LocationQuery
     ) {
         self.location = location
     }
@@ -97,7 +97,7 @@ public struct HourlyForecastTile: View {
 struct HourlyForecastTile_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
-            HourlyForecastTile(location: LocationQuery.standardValue())
+            HourlyForecastTile(location: .mock())
                 .padding(.vertical)
                 .frame(height: 150)
                 .background(BrandTheme.Color.Background.primary)

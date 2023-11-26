@@ -8,10 +8,11 @@
 
 import Foundation
 import Navigation
+import WeatherDomain
 
 enum WeatherAppScreen: NavigationScreen {
     case home
-    case locationWeather(location: String)
+    case locationWeather(location: LocationQuery)
     case search
     case settings
 }

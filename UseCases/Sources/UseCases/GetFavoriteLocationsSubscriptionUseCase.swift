@@ -9,11 +9,12 @@
 import Combine
 import Dependency
 import FavoriteDomain
+import WeatherDomain
 
 public final class GetFavoriteLocationsSubscriptionUseCase {
     @Dependency(FavoriteRepository.self) private static var favoriteRepository
     
-    public static func run() -> AsyncStream<[String]> {
+    public static func run() -> AsyncStream<LocationQueryCollection> {
         favoriteRepository.getLocationsSubscription().asyncStream()
     }
 }

@@ -13,9 +13,9 @@ import WeatherDomain
 public final class GetTwentyFourHourForecastForDateUseCase {
     @Dependency(WeatherRepository.self) private static var repository
     
-    public static func run(location: String) async throws -> [HourForecast] {
+    public static func run(location: LocationQuery) async throws -> [HourForecast] {
         try await repository.getHourForecast(
-            for: location,
+            for: location.value,
             days: 2,
             airQualityIncluded: false,
             weatherAlertsIncluded: false)

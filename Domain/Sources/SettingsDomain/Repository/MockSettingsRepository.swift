@@ -11,11 +11,11 @@ import WeatherDomain
 
 public final class MockSettingsRepository: SettingsRepository {
     private let settingsPublisher: CurrentValueSubject<Settings, Never>
-    private let homeLocationPublisher: CurrentValueSubject<String, Never>
+    private let homeLocationPublisher: CurrentValueSubject<LocationQuery, Never>
     
     public init(
         settings: Settings = .mock(id: "1"),
-        homeLocation: String = LocationQuery.standardValue()
+        homeLocation: LocationQuery = .mock()
     ) {
         self.settingsPublisher = .init(settings)
         self.homeLocationPublisher = .init(homeLocation)
@@ -26,7 +26,7 @@ public final class MockSettingsRepository: SettingsRepository {
             .eraseToAnyPublisher()
     }
     
-    public func getHomeLocationSubscription() -> AnyPublisher<String, Never> {
+    public func getHomeLocationSubscription() -> AnyPublisher<LocationQuery, Never> {
         homeLocationPublisher
             .eraseToAnyPublisher()
     }
@@ -35,7 +35,7 @@ public final class MockSettingsRepository: SettingsRepository {
         settingsPublisher.value
     }
     
-    public func getHomeLocation() async throws -> String {
+    public func getHomeLocation() async throws -> LocationQuery {
         homeLocationPublisher.value
     }
     
@@ -44,6 +44,6 @@ public final class MockSettingsRepository: SettingsRepository {
     }
     
     public func setHomeLocation(_ location: WeatherLocation) async throws {
-        homeLocationPublisher.send(location.query.value)
+        homeLocationPublisher.send(location.query)
     }
 }

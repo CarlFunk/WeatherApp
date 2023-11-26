@@ -12,10 +12,10 @@ import WeatherDomain
 
 public protocol SettingsRepository {
     func getSettingsSubscription() -> AnyPublisher<Settings, Never>
-    func getHomeLocationSubscription() -> AnyPublisher<String, Never>
+    func getHomeLocationSubscription() -> AnyPublisher<LocationQuery, Never>
     
     func getSettings() async throws -> Settings
-    func getHomeLocation() async throws -> String
+    func getHomeLocation() async throws -> LocationQuery
     
     func setSettings(_ settings: Settings) async throws
     func setHomeLocation(_ location: WeatherLocation) async throws

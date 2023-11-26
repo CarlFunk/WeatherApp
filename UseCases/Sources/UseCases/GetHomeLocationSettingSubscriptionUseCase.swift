@@ -10,11 +10,12 @@ import Combine
 import Dependency
 import Foundation
 import SettingsDomain
+import WeatherDomain
 
 public final class GetHomeLocationSettingSubscriptionUseCase {
     @Dependency(SettingsRepository.self) private static var repository
     
-    public static func run() -> AsyncStream<String> {
+    public static func run() -> AsyncStream<LocationQuery> {
         repository.getHomeLocationSubscription().asyncStream()
     }
 }

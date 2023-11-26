@@ -17,11 +17,11 @@ public struct LocationGrid: View, NavigatableView {
         case viewLocation(WeatherLocation)
     }
     
-    public let locations: [String]
+    public let locations: LocationQueryCollection
     public let navigationRequest: NavigationRequestClosure
     
     public init(
-        locations: [String],
+        locations: LocationQueryCollection,
         navigationRequest: @escaping NavigationRequestClosure
     ) {
         self.locations = locations
@@ -38,7 +38,7 @@ public struct LocationGrid: View, NavigatableView {
                 alignment: .leading,
                 spacing: BrandTheme.Spacing.medium
             ) {
-                ForEach(locations, id: \.self) { location in
+                ForEach(locations) { location in
                     LocationCard(location: location) { viewNavigationRequest in
                         switch viewNavigationRequest {
                         case .viewLocation(let location):
@@ -58,7 +58,7 @@ struct FavoriteLocationListView_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
             LocationGrid(
-                locations: [LocationQuery.standardValue()],
+                locations: [.mock()],
                 navigationRequest: { _ in })
         }
     }

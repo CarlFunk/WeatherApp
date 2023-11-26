@@ -11,8 +11,8 @@ import Foundation
 import WeatherDomain
 
 public protocol FavoriteRepository {
-    func getLocationsSubscription() -> AnyPublisher<[String], Never>
-    func getLocations() async throws -> [String]
+    func getLocationsSubscription() -> AnyPublisher<LocationQueryCollection, Never>
+    func getLocations() async throws -> LocationQueryCollection
     
     func addLocation(_ location: WeatherLocation) async throws
     func removeLocation(_ location: WeatherLocation) async throws

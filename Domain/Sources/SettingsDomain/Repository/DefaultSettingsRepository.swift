@@ -14,7 +14,7 @@ import WeatherDomain
 
 public final class DefaultSettingsRepository: SettingsRepository {
     private static let settingsPublisher = CurrentValueSubject<Settings?, Never>(nil)
-    private static let homeLocationPublisher = CurrentValueSubject<String?, Never>(nil)
+    private static let homeLocationPublisher = CurrentValueSubject<LocationQuery?, Never>(nil)
     
     @Dependency(SettingsLocalDataSource.self) private var localDataSource
     
@@ -48,15 +48,15 @@ public final class DefaultSettingsRepository: SettingsRepository {
         }
     }
     
-    public func getHomeLocationSubscription() -> AnyPublisher<String, Never> {
+    public func getHomeLocationSubscription() -> AnyPublisher<LocationQuery, Never> {
         if DefaultSettingsRepository.homeLocationPublisher.value == nil {
-            return Future<String, Never> { promise in
+            return Future<LocationQuery, Never> { promise in
                 Task {
-                    let homeLocation: String
+                    let homeLocation: LocationQuery
                     do {
                         homeLocation = try await self.getHomeLocation()
                     } catch {
-                        homeLocation = LocationQuery.standardValue()
+                        homeLocation = LocationQuery.default()
                     }
                     
                     DefaultSettingsRepository.homeLocationPublisher.value = homeLocation
@@ -85,11 +85,12 @@ public final class DefaultSettingsRepository: SettingsRepository {
         }
     }
     
-    public func getHomeLocation() async throws -> String {
-        let defaultHomeLocation: String = LocationQuery.standardValue()
+    public func getHomeLocation() async throws -> LocationQuery {
+        let defaultHomeLocation = LocationQuery.default()
         
         do {
-            return try await localDataSource.fetchHomeLocation()
+            let value = try await localDataSource.fetchHomeLocation()
+            return LocationQuery(value: value)
         } catch {
             return defaultHomeLocation
         }
@@ -110,7 +111,7 @@ public final class DefaultSettingsRepository: SettingsRepository {
     public func setHomeLocation(_ location: WeatherLocation) async throws {
         try await localDataSource.updateHomeLocation(location.query.value)
         await MainActor.run {
-            DefaultSettingsRepository.homeLocationPublisher.send(location.query.value)
+            DefaultSettingsRepository.homeLocationPublisher.send(location.query)
         }
     }
 }

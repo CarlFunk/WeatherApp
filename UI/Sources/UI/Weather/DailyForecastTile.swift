@@ -20,10 +20,10 @@ public struct DailyForecastTile: View, ActionableView {
     @State private var dayForecasts: MultiDayForecast = .mock()
     
     public let action: ActionClosure
-    public let location: String
+    public let location: LocationQuery
     
     public init(
-        location: String,
+        location: LocationQuery,
         action: @escaping ActionClosure
     ) {
         self.location = location
@@ -96,7 +96,7 @@ struct DailyForecastTile_Previews: PreviewProvider {
     static var previews: some View {
         PreviewView {
             DailyForecastTile(
-                location: LocationQuery.standardValue(),
+                location: .mock(),
                 action: { _ in })
             .padding(.vertical)
             .background(BrandTheme.Color.Background.primary)
