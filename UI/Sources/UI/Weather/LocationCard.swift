@@ -53,7 +53,7 @@ public struct LocationCard: View, NavigatableView {
         .background(
             RoundedRectangle(cornerRadius: 8)
                 .fill(BrandTheme.Color.Background.secondary).shadow(radius: 4))
-        .redacted(when: weather.isMock && settings.isMock)
+        .redacted(when: weather.isMock || settings.isMock)
         .onTapGesture {
             navigationRequest(.viewLocation(weather.location))
         }

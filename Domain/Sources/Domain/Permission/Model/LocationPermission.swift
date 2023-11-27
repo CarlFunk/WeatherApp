@@ -11,6 +11,7 @@ public enum LocationPermission: Equatable {
     case awaitingUserRequest
     case denied
     case restricted
+    case unknown
     
     public var isAuthorized: Bool {
         switch self {
@@ -19,6 +20,10 @@ public enum LocationPermission: Equatable {
         default:
             return false
         }
+    }
+    
+    public var isUnknown: Bool {
+        self == .unknown
     }
 }
 

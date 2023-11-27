@@ -12,7 +12,7 @@ import UseCases
 
 public struct SettingsPreviewView: View {
     
-    @State private var permission = LocationPermission.restricted
+    @State private var permission: LocationPermission = .unknown
     @State private var settings: Settings = .mock()
     @State private var weather: Weather = .mock()
     
@@ -31,7 +31,7 @@ public struct SettingsPreviewView: View {
             case .awaitingUserRequest:
                 enableLocationButton
                     .padding(.bottom, BrandTheme.Spacing.medium)
-            case .denied, .restricted:
+            case .denied, .restricted, .unknown:
                 EmptyView()
             }
             
@@ -54,6 +54,8 @@ public struct SettingsPreviewView: View {
             }
         }
         .frame(maxWidth: .infinity)
+        .redacted(when: settings.isMock || permission.isUnknown)
+        .task(loadPermissionData)
         .task(loadSettingsData)
     }
     
@@ -166,6 +168,15 @@ public struct SettingsPreviewView: View {
             Text(weather.windSpeed.formatted(unit: settings.windSpeedUnit, includeUnitAbbreviation: true))
                 .font(.brand(style: .medium, size: 12))
                 .foregroundColor(BrandTheme.Color.Text.primary)
+        }
+    }
+    
+    @Sendable
+    private func loadPermissionData() async {
+        do {
+            self.permission = try await CheckLocationPermissionUseCase.run()
+        } catch {
+            
         }
     }
     

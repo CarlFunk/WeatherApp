@@ -20,8 +20,10 @@ public struct LocationQuery: Equatable, ExpressibleByStringLiteral, Hashable, Id
     public var id: String {
         value
     }
-    
-    public static func generate(
+}
+
+public extension LocationQuery {
+    static func generate(
         name: String,
         region: String,
         country: String

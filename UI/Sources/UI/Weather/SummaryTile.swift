@@ -56,7 +56,7 @@ public struct SummaryTile: View {
                 .padding(BrandTheme.Spacing.standard)
         }
         .frame(maxWidth: .infinity)
-        .redacted(when: weather.isMock && settings.isMock)
+        .redacted(when: weather.isMock || settings.isMock)
         .task(id: location, loadData)
         .task(loadSettingsData)
     }

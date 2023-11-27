@@ -38,7 +38,7 @@ public struct HourlyForecastTile: View {
             .padding(.horizontal, BrandTheme.Spacing.standard)
         }
         .frame(height: scrollViewHeight)
-        .redacted(when: hourForecasts.isMock && settings.isMock)
+        .redacted(when: hourForecasts.isMock || settings.isMock)
         .task(id: location, loadData)
         .task(loadSettingsData)
     }

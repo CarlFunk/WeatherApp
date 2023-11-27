@@ -29,6 +29,8 @@ public final class RequestLocationUseCase {
                 throw UseCaseError.invalidPermission
             case .restricted:
                 throw UseCaseError.invalidPermission
+            case .unknown:
+                throw UseCaseError.invalidPermission
             }
         
         } catch {
