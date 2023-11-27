@@ -6,7 +6,6 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import CoreLocation
 import Foundation
 
 public struct WeatherLocation: Equatable, Identifiable {

@@ -19,13 +19,13 @@ public extension MultiDayForecast {
 public extension MultiDayForecast {
     static func mock() -> MultiDayForecast {
         return [
-            .mock(date: .mock(addedDays: 0)),
-            .mock(date: .mock(addedDays: 1)),
-            .mock(date: .mock(addedDays: 2)),
-            .mock(date: .mock(addedDays: 3)),
-            .mock(date: .mock(addedDays: 4)),
-            .mock(date: .mock(addedDays: 5)),
-            .mock(date: .mock(addedDays: 6))
+            DayForecast.mock(date: .mock(addedDays: 0)),
+            DayForecast.mock(date: .mock(addedDays: 1)),
+            DayForecast.mock(date: .mock(addedDays: 2)),
+            DayForecast.mock(date: .mock(addedDays: 3)),
+            DayForecast.mock(date: .mock(addedDays: 4)),
+            DayForecast.mock(date: .mock(addedDays: 5)),
+            DayForecast.mock(date: .mock(addedDays: 6))
         ]
     }
 }

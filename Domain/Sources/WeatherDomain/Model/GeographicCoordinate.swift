@@ -6,7 +6,6 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import CoreLocation
 import Foundation
 
 public struct GeographicCoordinate: Equatable {
@@ -23,12 +22,6 @@ public struct GeographicCoordinate: Equatable {
     
     public var description: String {
         return "\(latitude),\(longitude)"
-    }
-    
-    public var coreLocationCoordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(
-            latitude: latitude,
-            longitude: longitude)
     }
 }
 

@@ -39,5 +39,4 @@ public final class MockFavoriteRepository: FavoriteRepository {
         locations.removeAll(where: { $0 == location.query })
         locationsPublisher.send(locations)
     }
-    
 }
