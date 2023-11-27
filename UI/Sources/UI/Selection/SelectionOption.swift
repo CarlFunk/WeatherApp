@@ -6,8 +6,6 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import Foundation
-
 public protocol SelectionOption: Equatable, Hashable, Identifiable {
     var selectionValue: String { get }
 }

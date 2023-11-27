@@ -6,9 +6,8 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import Combine
 import Dependency
-import SettingsDomain
+import Domain
 
 public final class GetSettingsSubscriptionUseCase {
     @Dependency(SettingsRepository.self) private static var repository

@@ -7,9 +7,7 @@
 //
 
 import Dependency
-import Foundation
-import SettingsDomain
-import WeatherDomain
+import Domain
 
 public final class UpdateHomeLocationSettingUseCase {
     @Dependency(SettingsRepository.self) private static var repository

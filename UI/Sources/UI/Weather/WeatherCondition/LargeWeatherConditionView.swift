@@ -6,8 +6,8 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
+import Domain
 import SwiftUI
-import WeatherDomain
 
 public struct LargeWeatherConditionView: View {
     private let width: CGFloat = 164

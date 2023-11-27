@@ -6,8 +6,7 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import Foundation
-import SettingsDomain
+import Domain
 import SwiftUI
 
 public struct SelectionRows<Option: SelectionOption>: View {

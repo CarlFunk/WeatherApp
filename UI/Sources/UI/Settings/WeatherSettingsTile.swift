@@ -6,10 +6,9 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
+import Domain
 import SwiftUI
-import SettingsDomain
 import UseCases
-import WeatherDomain
 
 public struct WeatherSettingsTile: View, ActionableView {
     public enum Action {

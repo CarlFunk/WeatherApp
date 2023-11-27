@@ -6,15 +6,9 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
+import Data
 import Dependency
-import FavoriteData
-import FavoriteDomain
-import Foundation
-import PermissionDomain
-import SettingsData
-import SettingsDomain
-import WeatherData
-import WeatherDomain
+import Domain
 
 public final class SetupDependenciesUseCase {
     public enum Environment {

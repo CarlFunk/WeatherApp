@@ -6,9 +6,8 @@
 //  Copyright © 2023 Carl Funk. All rights reserved.
 //
 
-import Foundation
+import Domain
 import Navigation
-import WeatherDomain
 
 enum WeatherAppScreen: NavigationScreen {
     case home

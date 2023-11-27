@@ -11,9 +11,7 @@ let package = Package(
         .library(
             name: "Data",
             targets: [
-                "FavoriteData",
-                "SettingsData",
-                "WeatherData"
+                "Data"
             ])
     ],
     dependencies: [
@@ -21,21 +19,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "FavoriteData",
-            dependencies: [
-                .product(
-                    name: "Dependency",
-                    package: "Dependency")
-            ]),
-        .target(
-            name: "SettingsData",
-            dependencies: [
-                .product(
-                    name: "Dependency",
-                    package: "Dependency")
-            ]),
-        .target(
-            name: "WeatherData",
+            name: "Data",
             dependencies: [
                 .product(
                     name: "Dependency",

@@ -7,7 +7,7 @@
 //
 
 import Dependency
-import WeatherDomain
+import Domain
 
 public final class GetCurrentWeatherForLocationUseCase {
     @Dependency(WeatherRepository.self) private static var weatherRepository

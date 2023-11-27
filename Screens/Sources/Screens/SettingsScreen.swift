@@ -6,12 +6,10 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import PermissionDomain
-import SettingsDomain
+import Domain
 import SwiftUI
 import UI
 import UseCases
-import WeatherDomain
 
 public struct SettingsScreen: View {
     public enum SettingsSelection: String, Equatable, Identifiable {

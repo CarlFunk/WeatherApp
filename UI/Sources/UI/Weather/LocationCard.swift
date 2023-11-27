@@ -6,10 +6,9 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import SettingsDomain
+import Domain
 import SwiftUI
 import UseCases
-import WeatherDomain
 
 public struct LocationCard: View, NavigatableView {
     public enum NavigationRequest {

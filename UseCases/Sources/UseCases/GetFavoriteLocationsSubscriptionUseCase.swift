@@ -6,10 +6,8 @@
 //  Copyright © 2023 Carl Funk. All rights reserved.
 //
 
-import Combine
 import Dependency
-import FavoriteDomain
-import WeatherDomain
+import Domain
 
 public final class GetFavoriteLocationsSubscriptionUseCase {
     @Dependency(FavoriteRepository.self) private static var favoriteRepository

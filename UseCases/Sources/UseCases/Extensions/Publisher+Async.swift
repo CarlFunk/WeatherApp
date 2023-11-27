@@ -7,7 +7,6 @@
 //
 
 import Combine
-import Foundation
 
 public extension Publisher {
     func asyncStream() -> AsyncStream<Output> {

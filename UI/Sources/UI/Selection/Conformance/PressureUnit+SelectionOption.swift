@@ -6,7 +6,7 @@
 //  Copyright © 2023 Carl Funk. All rights reserved.
 //
 
-import WeatherDomain
+import Domain
 
 extension PressureUnit: SelectionOption {
     public var selectionValue: String {

@@ -7,9 +7,7 @@
 //
 
 import Dependency
-import FavoriteDomain
-import Foundation
-import WeatherDomain
+import Domain
 
 public final class ToggleFavoriteLocationUseCase {
     @Dependency(FavoriteRepository.self) private static var repository

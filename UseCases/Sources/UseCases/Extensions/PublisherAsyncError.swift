@@ -6,8 +6,6 @@
 //  Copyright © 2023 Carl Funk. All rights reserved.
 //
 
-import Foundation
-
 public enum PublisherAsyncError: Error {
     case finishedWithoutValue
 }

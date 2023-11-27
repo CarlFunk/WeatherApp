@@ -7,8 +7,7 @@
 //
 
 import Dependency
-import Foundation
-import PermissionDomain
+import Domain
 
 public final class RequestLocationPermissionUseCase {
     @Dependency(PermissionRepository.self) private static var repository

@@ -6,10 +6,10 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
+import Domain
 import SwiftUI
 import UI
 import UseCases
-import WeatherDomain
 
 public struct LocationWeatherScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass

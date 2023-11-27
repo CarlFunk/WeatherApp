@@ -6,8 +6,8 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
+import Domain
 import SwiftUI
-import WeatherDomain
 import UseCases
 
 public struct DaylightForecastTile: View {

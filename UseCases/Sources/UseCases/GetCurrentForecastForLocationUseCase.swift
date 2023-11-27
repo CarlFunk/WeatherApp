@@ -7,10 +7,10 @@
 //
 
 import Dependency
-import WeatherDomain
+import Domain
 
 public final class GetCurrentForecastForLocationUseCase {
-    enum UseCaseError: Error {
+    public enum UseCaseError: Error {
         case missingDayForecast
     }
     

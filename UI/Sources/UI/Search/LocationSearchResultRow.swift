@@ -6,9 +6,9 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
+import Domain
 import SwiftUI
 import UseCases
-import WeatherDomain
 
 public struct LocationSearchResultRow: View, NavigatableView {
     public enum NavigationRequest {

@@ -6,8 +6,6 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import Foundation
-
 public class BrandTheme {
     public typealias Color = BrandColor
     public typealias Font = BrandFont

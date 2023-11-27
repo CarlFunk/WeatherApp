@@ -6,12 +6,14 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import Combine
 import Dependency
-import Foundation
-import PermissionDomain
+import Domain
 
 public final class RequestLocationUseCase {
+    public enum UseCaseError: Error {
+        case invalidPermission
+    }
+    
     @Dependency(PermissionRepository.self) private static var repository
     
     public static func run() async throws -> (latitude: Double, longitude: Double) {
@@ -22,11 +24,11 @@ public final class RequestLocationUseCase {
             case .authorized:
                 return (latitude: Double.zero, longitude: Double.zero)
             case .awaitingUserRequest:
-                throw NSError()
+                throw UseCaseError.invalidPermission
             case .denied:
-                throw NSError()
+                throw UseCaseError.invalidPermission
             case .restricted:
-                throw NSError()
+                throw UseCaseError.invalidPermission
             }
         
         } catch {

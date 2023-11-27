@@ -6,8 +6,6 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import Foundation
-
 public struct SelectionGroup<Option: SelectionOption>: Equatable {
     public enum Mode {
         case single

@@ -6,8 +6,6 @@
 //  Copyright © 2023 Carl Funk. All rights reserved.
 //
 
-import Foundation
-
 public protocol NavigatableView {
     typealias NavigationRequestClosure = ( (NavigationRequest) -> Void )
     

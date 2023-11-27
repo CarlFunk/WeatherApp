@@ -11,10 +11,7 @@ let package = Package(
         .library(
             name: "Domain",
             targets: [
-                "FavoriteDomain",
-                "PermissionDomain",
-                "SettingsDomain",
-                "WeatherDomain"
+                "Domain"
             ])
     ],
     dependencies: [
@@ -23,38 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "FavoriteDomain",
-            dependencies: [
-                .product(
-                    name: "Data",
-                    package: "Data"),
-                .product(
-                    name: "Dependency",
-                    package: "Dependency"),
-                .target(
-                    name: "WeatherDomain")
-            ]),
-        .target(
-            name: "PermissionDomain",
-            dependencies: [
-                .product(
-                    name: "Dependency",
-                    package: "Dependency")
-            ]),
-        .target(
-            name: "SettingsDomain",
-            dependencies: [
-                .product(
-                    name: "Data",
-                    package: "Data"),
-                .product(
-                    name: "Dependency",
-                    package: "Dependency"),
-                .target(
-                    name: "WeatherDomain")
-            ]),
-        .target(
-            name: "WeatherDomain",
+            name: "Domain",
             dependencies: [
                 .product(
                     name: "Data",

@@ -7,8 +7,7 @@
 //
 
 import Dependency
-import Foundation
-import SettingsDomain
+import Domain
 
 public final class UpdateSettingsUseCase {
     @Dependency(SettingsRepository.self) private static var repository

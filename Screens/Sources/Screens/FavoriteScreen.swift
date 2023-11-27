@@ -6,11 +6,10 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
-import Combine
+import Domain
 import SwiftUI
 import UI
 import UseCases
-import WeatherDomain
 
 public struct FavoriteScreen: View, NavigatableView {
     

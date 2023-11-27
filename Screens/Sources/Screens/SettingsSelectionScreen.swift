@@ -6,10 +6,9 @@
 //  Copyright © 2022 Carl Funk. All rights reserved.
 //
 
+import Domain
 import SwiftUI
-import SettingsDomain
 import UI
-import WeatherDomain
 
 public struct SettingsSelectionScreen<Option: SelectionOption>: View {
     @Environment(\.dismiss) private var dismiss

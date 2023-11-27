@@ -7,8 +7,7 @@
 //
 
 import Dependency
-import Foundation
-import WeatherDomain
+import Domain
 
 public final class GetSevenDayForecastUseCase {
     @Dependency(WeatherRepository.self) private static var repository

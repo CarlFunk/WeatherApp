@@ -6,11 +6,10 @@
 //  Copyright © 2023 Carl Funk. All rights reserved.
 //
 
-import Combine
+import Domain
 import SwiftUI
 import UI
 import UseCases
-import WeatherDomain
 
 public struct HomeScreen: View {
     @State private var location: LocationQuery = .default()
