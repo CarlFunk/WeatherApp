@@ -73,6 +73,7 @@ extension DefaultPermissionRepository: CLLocationManagerDelegate {
     }
     
     public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        
+        let locationPermission = LocationPermission(from: status)
+        DefaultPermissionRepository.locationPermissionPublisher.send(locationPermission)
     }
 }

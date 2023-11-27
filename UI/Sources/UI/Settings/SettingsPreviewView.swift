@@ -173,10 +173,9 @@ public struct SettingsPreviewView: View {
     
     @Sendable
     private func loadPermissionData() async {
-        do {
-            self.permission = try await CheckLocationPermissionUseCase.run()
-        } catch {
-            
+        let permissionStream = GetLocationPermissionSubscriptionUseCase.run()
+        for await permission in permissionStream {
+            self.permission = permission
         }
     }
     

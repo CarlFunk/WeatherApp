@@ -1,5 +1,5 @@
 //
-//  CheckLocationPermissionUseCase.swift
+//  GetLocationPermissionSubscriptionUseCase.swift
 //  UseCases
 //
 //  Created by Carl Funk on 11/26/23.
@@ -9,10 +9,10 @@
 import Dependency
 import Domain
 
-public final class CheckLocationPermissionUseCase {
+public final class GetLocationPermissionSubscriptionUseCase {
     @Dependency(PermissionRepository.self) private static var permissionRepository
     
-    public static func run() async throws -> LocationPermission {
-        try await permissionRepository.checkLocation()
+    public static func run() -> AsyncStream<LocationPermission> {
+        permissionRepository.locationPublisher().asyncStream()
     }
 }
