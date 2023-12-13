@@ -16,22 +16,6 @@ struct ApplicationRouterView: View {
     unowned let coordinator: NavigationCoordinator<WeatherAppScreen>
     
     var body: some View {
-        switch navigation.screen {
-        case .home:
-            HomeScreen()
-        case .locationWeather(let location):
-            LocationWeatherScreen(
-                location: location)
-        case .search:
-            FavoriteScreen { [weak coordinator] navigationRequest in
-                switch navigationRequest {
-                case .viewLocation(let location):
-                    coordinator?.navigate(to: Navigation(
-                        screen: .locationWeather(location: location)))
-                }
-            }
-        case .settings:
-            SettingsScreen()
-        }
+        return AnyView(navigation.screen.view(coordinator))
     }
 }
