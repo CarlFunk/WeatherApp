@@ -21,7 +21,8 @@ struct WeatherAppScreen: NavigationScreen {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
-    }}
+    }
+}
 
 extension WeatherAppScreen {
     static let home = WeatherAppScreen(title: "home", view: { _ in HomeScreen() })
